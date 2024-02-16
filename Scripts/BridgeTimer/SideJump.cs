@@ -2,6 +2,6 @@
 {
 	public struct SideJump
 	{
-		
+		public float JumpStartedDurability;
 	}
 }

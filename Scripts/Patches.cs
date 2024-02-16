@@ -16,8 +16,12 @@ namespace BridgeCalculator
 		{
 			GameObject bridgeTriggerObj = __instance.gameObject;
 
-			bridgeTriggerObj.AddComponent<BridgeTimerManager>();
-			bridgeTriggerObj.AddComponent<BridgeResetter>();
+			bridgeTriggerObj.AddComponent<BridgeRunManager>();
+
+			if (ConfigUtil.ShouldBridgeReset.Value)
+			{
+				bridgeTriggerObj.AddComponent<BridgeResetter>();
+			}
 
 			if (ConfigUtil.ShouldBridgeLogHealth.Value)
 			{
@@ -30,7 +34,7 @@ namespace BridgeCalculator
 		{
 			BridgeFallenEvent.RaiseEvent();
 		}
-		
+
 		[HarmonyPatch(typeof(HUDManager), nameof(HUDManager.Update)), HarmonyPostfix]
 		internal static void HUDManagerUpdatePatch(HUDManager __instance)
 		{

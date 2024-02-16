@@ -7,6 +7,8 @@ namespace BridgeCalculator.Components
 {
 	public class BridgeResetter : BetterMonoBehaviour
 	{
+		public const float RESET_TIME = 3f;
+		
 		private BridgeTrigger bridgeTrigger;
 
 		private int defaultAnimationStateID;
@@ -35,7 +37,7 @@ namespace BridgeCalculator.Components
 			if (!isInvoking)
 			{
 				isInvoking = true;
-				Invoke(nameof(ResetBridge), 5f);
+				Invoke(nameof(ResetBridge), RESET_TIME);
 			}
 		}
 
