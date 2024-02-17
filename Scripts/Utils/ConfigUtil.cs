@@ -16,6 +16,9 @@ namespace BridgeCalculator.Utils
 		
 		// PLAYER
 		public static ConfigEntry<bool> ShouldPlayerBeInvincible;
+		
+		// OTHER
+		public static ConfigEntry<bool> StopTimeFromPassing;
 
 		private static ConfigFile config;
 
@@ -40,6 +43,9 @@ namespace BridgeCalculator.Utils
 			
 			// PLAYER
 			ShouldPlayerBeInvincible = config.Bind("2. Player", "shouldPlayerBeInvincible", false, "Should the player never die?");
+			
+			// OTHER
+			StopTimeFromPassing = config.Bind("3. Other", "stopTimeFromPassing", true, "Stop time of day from advancing");
 		}
 	}
 }

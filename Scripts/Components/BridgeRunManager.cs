@@ -72,17 +72,6 @@ namespace BridgeCalculator.Components
 
 					currentRuns.Add(other, run);
 				}
-
-				//if (!startedTotalTimer)
-				//{
-				//	enterPosition.y = 0;
-				//
-				//	StartTotalTimer(enterPosition);
-				//}
-				//else if (startedSideTimer) // Should always be true in this case
-				//{
-				//	StopSideTimer(true);
-				//}
 			}
 		}
 
@@ -116,7 +105,7 @@ namespace BridgeCalculator.Components
 		{
 			foreach (KeyValuePair<Collider, BridgeRun> pair in currentRuns)
 			{
-				pair.Value.FellOffBridge();
+				pair.Value.StopRun();
 			}
 			
 			currentRuns.Clear();
@@ -137,8 +126,8 @@ namespace BridgeCalculator.Components
 		{
 			if (currentRuns.Remove(collider, out BridgeRun run))
 			{
-				LoggerUtil.LogError($"{run.PlayerName} fell off the bridge!\n");
-				run.FellOffBridge();
+				BridgeRunLogger.FellOffBridge(run.PlayerName);
+				run.StopRun();
 			}
 		}
 

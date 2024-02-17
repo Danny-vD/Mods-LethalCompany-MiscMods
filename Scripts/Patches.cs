@@ -12,6 +12,8 @@ namespace BridgeCalculator
 {
 	internal static class Patches
 	{
+		private static int originalHealth;
+		
 		[HarmonyPatch(typeof(BridgeTrigger), nameof(BridgeTrigger.OnEnable)), HarmonyPostfix]
 		internal static void BridgeTriggerOnEnablePatch(BridgeTrigger __instance)
 		{
@@ -28,6 +30,11 @@ namespace BridgeCalculator
 			{
 				bridgeTriggerObj.AddComponent<BridgeHealthLogger>();
 			}
+
+			if (ConfigUtil.StopTimeFromPassing.Value)
+			{
+				Object.FindAnyObjectByType<TimeOfDay>().enabled = false;
+			}
 		}
 
 		[HarmonyPatch(typeof(BridgeTrigger), nameof(BridgeTrigger.BridgeFallClientRpc)), HarmonyPostfix]
@@ -41,7 +48,7 @@ namespace BridgeCalculator
 		{
 			float carryWeight = GameNetworkManager.Instance.localPlayerController.carryWeight;
 
-			float weightPounds = Mathf.RoundToInt(Mathf.Clamp(carryWeight - 1f, 0f, 100f) * 105f);
+			float weightPounds = Mathf.Clamp(carryWeight - 1f, 0f, 100f) * 105f;
 			__instance.weightCounter.text = $"{weightPounds} lb ({carryWeight})";
 		}
 
@@ -59,7 +66,5 @@ namespace BridgeCalculator
 				__instance.health = originalHealth;
 			}
 		}
-
-		private static int originalHealth;
 	}
 }

@@ -38,6 +38,13 @@ namespace BridgeCalculator.BridgeTimer
 			currentSideJump?.Update();
 		}
 
+		public void StopRun()
+		{
+			bridgeTimer.StopTimer();
+			
+			EndSideJump(false);
+		}
+
 		private void StartSideJump()
 		{
 			BridgeRunLogger.JumpedOffSide(PlayerName);
@@ -59,13 +66,6 @@ namespace BridgeCalculator.BridgeTimer
 			}
 		}
 
-		public void FellOffBridge()
-		{
-			bridgeTimer.StopTimer();
-
-			EndSideJump(false);
-		}
-
 		public void LeftBridgeTrigger(Vector3 bridgeLeftPosition)
 		{
 			float distance = Vector3.Distance(bridgeEnteredPosition, bridgeLeftPosition);
@@ -76,7 +76,7 @@ namespace BridgeCalculator.BridgeTimer
 			}
 			else
 			{
-				bridgeTimer.StopTimer();
+				StopRun();
 			}
 		}
 

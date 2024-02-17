@@ -1,4 +1,4 @@
-﻿using BridgeCalculator.Utils;
+﻿using BridgeCalculator.BridgeTimer.StaticClasses;
 using UnityEngine;
 
 namespace BridgeCalculator.BridgeTimer
@@ -7,9 +7,10 @@ namespace BridgeCalculator.BridgeTimer
 	{
 		private const float maximumSideJumpTimer = 5f;
 		
+		public bool IsJumping = false;
+		
 		private float jumpStartedDurability;
-
-		private bool startedTimer = false;
+		
 		private float jumpTimer = 0;
 
 		private BridgeRun bridgeRun;
@@ -25,13 +26,13 @@ namespace BridgeCalculator.BridgeTimer
 
 		public void Update()
 		{
-			if (startedTimer)
+			if (IsJumping)
 			{
 				jumpTimer += Time.unscaledDeltaTime;
 
 				if (jumpTimer > maximumSideJumpTimer) // Fell off the bridge
 				{
-					bridgeRun.FellOffBridge();
+					bridgeRun.StopRun();
 				}
 			}
 		}
@@ -41,19 +42,16 @@ namespace BridgeCalculator.BridgeTimer
 			jumpStartedDurability = bridgeTrigger.bridgeDurability;
 
 			jumpTimer  = 0;
-			startedTimer = true;
+			IsJumping = true;
 		}
 
 		public void EndJump(bool success)
 		{
-			startedTimer = false;
+			IsJumping = false;
 
 			if (success)
 			{
-				float healthRegained = bridgeTrigger.bridgeDurability - jumpStartedDurability;
-				
-				LoggerUtil.LogWarning(
-					$"Successful jump!\nJump time: {jumpTimer} seconds\nHealth regained: {healthRegained * 100}%\nCurrent Health: {bridgeTrigger.bridgeDurability * 100}%\n");
+				BridgeRunLogger.SuccessfulSideJump(jumpTimer, jumpStartedDurability, bridgeTrigger.bridgeDurability);
 			}
 		}
 		

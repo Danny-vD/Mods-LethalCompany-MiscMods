@@ -4,9 +4,9 @@ namespace BridgeCalculator.BridgeTimer
 {
 	public class BridgeTimer
 	{
-		private bool startedTotalTimer = false;
-
-		private float bridgeTotalTimer;
+		public bool IsTimerRunning { get; private set; }
+		
+		public float BridgeTotalTimer { get; private set; }
 
 		public BridgeTimer()
 		{
@@ -15,29 +15,27 @@ namespace BridgeCalculator.BridgeTimer
 
 		public void Update()
 		{
-			if (startedTotalTimer)
+			if (IsTimerRunning)
 			{
-				bridgeTotalTimer += Time.unscaledDeltaTime;
+				BridgeTotalTimer += Time.unscaledDeltaTime;
 			}
 		}
 
 		private void StartTimer()
 		{
-			bridgeTotalTimer  = 0;
-			startedTotalTimer = true;
-
-			//bridgeEnteredPosition = enterPosition;
+			BridgeTotalTimer  = 0;
+			IsTimerRunning = true;
 		}
 		
 		public void StopTimer()
 		{
-			if (startedTotalTimer)
+			if (IsTimerRunning)
 			{
-				startedTotalTimer = false;
+				IsTimerRunning = false;
 			}
 		}
 
-		public void StopTotalTimer()
+		public void GetStatistics()
 		{
 			/*
 			// TODO: move out of this function (move to BridgeRun?)
