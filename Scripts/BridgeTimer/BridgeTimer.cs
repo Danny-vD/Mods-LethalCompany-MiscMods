@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using BridgeCalculator.Utils;
+using UnityEngine;
 
 namespace BridgeCalculator.BridgeTimer
 {
 	public class BridgeTimer
 	{
-		private const float maximumSideTimer = 5f;
+		private readonly BridgeRun bridgeRun;
 		
 		private bool startedTotalTimer = false;
 		private bool startedSideTimer = false;
@@ -12,8 +13,9 @@ namespace BridgeCalculator.BridgeTimer
 		private float bridgeTotalTimer;
 		private float bridgeSideTimer;
 
-		public BridgeTimer(Vector3 enterPosition)
+		public BridgeTimer(BridgeRun run, Vector3 enterPosition)
 		{
+			bridgeRun = run;
 			StartTotalTimer(enterPosition);
 		}
 
@@ -22,16 +24,6 @@ namespace BridgeCalculator.BridgeTimer
 			if (startedTotalTimer)
 			{
 				bridgeTotalTimer += Time.unscaledDeltaTime;
-			}
-
-			if (startedSideTimer)
-			{
-				bridgeSideTimer += Time.unscaledDeltaTime;
-
-				if (bridgeSideTimer > maximumSideTimer) // Fell off the bridge
-				{
-					FellOffBridge(); //TODO add event
-				}
 			}
 		}
 
@@ -106,29 +98,6 @@ namespace BridgeCalculator.BridgeTimer
 								$"Distance: {distance} | Shortest: {shortestDistance} | Longest: {longestDistance}\n");
 		}
 		
-		public void StartSideTimer()
-		{
-			LoggerUtil.LogWarning("Jumped off side!\n");
-
-			jumpStartedDurability = bridgeTrigger.bridgeDurability;
-
-			bridgeSideTimer  = 0;
-			startedSideTimer = true;
-		}
-
-		public void StopSideTimer(bool success)
-		{
-			startedSideTimer = false;
-
-			if (success)
-			{
-				float healthRegained = bridgeTrigger.bridgeDurability - jumpStartedDurability;
-				
-				LoggerUtil.LogWarning(
-					$"Successful jump!\nJump time: {bridgeSideTimer} seconds\nHealth regained: {healthRegained * 100}%\nCurrent Health: {bridgeTrigger.bridgeDurability * 100}%\n");
-			}
-		}
-		
 		public void StopAllTimers()
 		{
 			if (startedSideTimer)
@@ -140,6 +109,11 @@ namespace BridgeCalculator.BridgeTimer
 			{
 				StopTotalTimer(bridgeEnteredPosition);
 			}
+		}
+
+		public void OnDestroy()
+		{
+			
 		}
 	}
 }

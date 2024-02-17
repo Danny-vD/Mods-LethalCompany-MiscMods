@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BridgeCalculator.BaseClasses;
 using BridgeCalculator.BridgeTimer;
+using BridgeCalculator.BridgeTimer.StaticClasses;
 using BridgeCalculator.Events;
 using BridgeCalculator.Utils;
 using GameNetcodeStuff;
@@ -12,7 +13,7 @@ namespace BridgeCalculator.Components
 	{
 		public static float BridgeLength = 0;
 
-		private Dictionary<Collider, BridgeRun> currentRuns = new Dictionary<Collider, BridgeRun>();
+		private readonly Dictionary<Collider, BridgeRun> currentRuns = new Dictionary<Collider, BridgeRun>();
 		
 		private Collider triggerCollider;
 		private BridgeTrigger bridgeTrigger;
@@ -32,7 +33,7 @@ namespace BridgeCalculator.Components
 			triggerCollider = GetComponent<Collider>();
 			BridgeLength    = triggerCollider.bounds.extents.z * 2;
 
-			BridgeFallenEvent.OnBridgeFallen += StopAllRuns;
+			BridgeFallenEvent.OnBridgeFallen += BridgeCollapsed;
 		}
 
 		private void Update()
@@ -59,12 +60,15 @@ namespace BridgeCalculator.Components
 
 				if (currentRuns.TryGetValue(other, out BridgeRun run))
 				{
-					run.StopSideJump();
+					// If a run already started and they entered the trigger, means that they side-jumped off and managed to get back on
+					run.EndSideJump(true);
 				}
 				else
 				{
 					PlayerControllerB playerControllerB = other.gameObject.GetComponent<PlayerControllerB>();
-					run = new BridgeRun(playerControllerB.playerUsername, enterPosition);
+					run = new BridgeRun(bridgeTrigger, playerControllerB.playerUsername, enterPosition);
+					
+					BridgeRunLogger.EnteredBridge(playerControllerB.playerUsername);
 
 					currentRuns.Add(other, run);
 				}
@@ -96,20 +100,18 @@ namespace BridgeCalculator.Components
 
 				bridgeLeftPosition.y = 0;
 
-				float distance = Vector3.Distance(bridgeEnteredPosition, bridgeLeftPosition);
-				
-				if (distance < DisqualificationDistance && distance > 2f)
+				if (currentRuns.TryGetValue(other, out BridgeRun run))
 				{
-					StartSideTimer();
+					run.LeftBridgeTrigger(bridgeLeftPosition);
 				}
 				else
 				{
-					StopTotalTimer(bridgeLeftPosition);
+					BridgeRunLogger.LeftBridgeNoRun();
 				}
 			}
 		}
 
-		private void StopAllRuns()
+		private void BridgeCollapsed()
 		{
 			foreach (KeyValuePair<Collider, BridgeRun> pair in currentRuns)
 			{
@@ -132,7 +134,7 @@ namespace BridgeCalculator.Components
 		{
 			if (currentRuns.TryGetValue(collider, out BridgeRun run))
 			{
-				LoggerUtil.LogError($"{run.PlayerName} fell off bridge!\n");
+				LoggerUtil.LogError($"{run.PlayerName} fell off the bridge!\n");
 				run.FellOffBridge();
 				
 				currentRuns.Remove(collider);
@@ -141,7 +143,13 @@ namespace BridgeCalculator.Components
 
 		public override void OnDestroy()
 		{
-			BridgeFallenEvent.OnBridgeFallen -= StopAllRuns;
+			foreach (KeyValuePair<Collider, BridgeRun> pair in currentRuns)
+			{
+				pair.Value.OnDestroy();
+			}
+			
+			currentRuns.Clear();
+			BridgeFallenEvent.OnBridgeFallen -= BridgeCollapsed;
 			base.OnDestroy();
 		}
 	}

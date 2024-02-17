@@ -6,10 +6,14 @@ namespace BridgeCalculator.Components
 {
 	public class BridgeHealthLogger : BetterMonoBehaviour
 	{
+		//TODO: frequency
+		
 		private BridgeTrigger bridgeTrigger;
 
-		private bool playerOnBridge = false;
+		private bool IsPlayerOnBridge => playersCountOnBridge > 0;
 		private bool damagedLastFrame = false;
+
+		private int playersCountOnBridge = 0;
 
 		private void Awake()
 		{
@@ -20,7 +24,7 @@ namespace BridgeCalculator.Components
 		{
 			if (other.CompareTag("Player"))
 			{
-				playerOnBridge = true;
+				++playersCountOnBridge;
 			}
 		}
 
@@ -28,7 +32,7 @@ namespace BridgeCalculator.Components
 		{
 			if (bridgeTrigger.bridgeDurability < 1)
 			{
-				if (playerOnBridge || bridgeTrigger.giantOnBridge || ConfigUtil.PrintHealthWhenNotOnBridge.Value)
+				if (IsPlayerOnBridge || bridgeTrigger.giantOnBridge || ConfigUtil.PrintHealthWhenNotOnBridge.Value)
 				{
 					LoggerUtil.LogWarning("Bridge health: " + bridgeTrigger.bridgeDurability);
 					damagedLastFrame = true;
@@ -45,7 +49,7 @@ namespace BridgeCalculator.Components
 		{
 			if (other.CompareTag("Player"))
 			{
-				playerOnBridge = false;
+				--playersCountOnBridge;
 			}
 		}
 	}

@@ -4,6 +4,7 @@
 using BridgeCalculator.Components;
 using BridgeCalculator.Events;
 using BridgeCalculator.Utils;
+using GameNetcodeStuff;
 using HarmonyLib;
 using UnityEngine;
 
@@ -43,5 +44,22 @@ namespace BridgeCalculator
 			float weightPounds = Mathf.RoundToInt(Mathf.Clamp(carryWeight - 1f, 0f, 100f) * 105f);
 			__instance.weightCounter.text = $"{weightPounds} lb ({carryWeight})";
 		}
+
+		[HarmonyPatch(typeof(PlayerControllerB), nameof(PlayerControllerB.Start)), HarmonyPostfix]
+		internal static void PlayerControllerBStartPatch(PlayerControllerB __instance)
+		{
+			originalHealth = __instance.health;
+		}
+
+		[HarmonyPatch(typeof(PlayerControllerB), nameof(PlayerControllerB.DamagePlayer)), HarmonyPostfix]
+		internal static void PlayerControllerBDamagePlayerPatch(PlayerControllerB __instance)
+		{
+			if (ConfigUtil.ShouldPlayerBeInvincible.Value)
+			{
+				__instance.health = originalHealth;
+			}
+		}
+
+		private static int originalHealth;
 	}
 }
