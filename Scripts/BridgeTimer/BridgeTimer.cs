@@ -1,22 +1,16 @@
-﻿using BridgeCalculator.Utils;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace BridgeCalculator.BridgeTimer
 {
 	public class BridgeTimer
 	{
-		private readonly BridgeRun bridgeRun;
-		
 		private bool startedTotalTimer = false;
-		private bool startedSideTimer = false;
-		
-		private float bridgeTotalTimer;
-		private float bridgeSideTimer;
 
-		public BridgeTimer(BridgeRun run, Vector3 enterPosition)
+		private float bridgeTotalTimer;
+
+		public BridgeTimer()
 		{
-			bridgeRun = run;
-			StartTotalTimer(enterPosition);
+			StartTimer();
 		}
 
 		public void Update()
@@ -27,23 +21,25 @@ namespace BridgeCalculator.BridgeTimer
 			}
 		}
 
-		private void StartTotalTimer(Vector3 enterPosition)
+		private void StartTimer()
 		{
 			bridgeTotalTimer  = 0;
 			startedTotalTimer = true;
 
-			bridgeEnteredPosition = enterPosition;
+			//bridgeEnteredPosition = enterPosition;
 		}
 		
-		public void StopTotalTimer(Vector3 exitPosition, bool printResult = true)
+		public void StopTimer()
 		{
-			startedTotalTimer = false;
-			
-			if (!printResult)
+			if (startedTotalTimer)
 			{
-				return;
+				startedTotalTimer = false;
 			}
-			
+		}
+
+		public void StopTotalTimer()
+		{
+			/*
 			// TODO: move out of this function (move to BridgeRun?)
 			Vector3 bridgeLeftPosition = exitPosition;
 			bridgeLeftPosition.y = 0;
@@ -52,7 +48,7 @@ namespace BridgeCalculator.BridgeTimer
 			perfectBridgeLeftPosition.x = bridgeEnteredPosition.x;
 
 			float perfectDistance = Vector3.Distance(bridgeEnteredPosition, perfectBridgeLeftPosition);
-			
+
 			float distance = Vector3.Distance(bridgeEnteredPosition, bridgeLeftPosition);
 
 			bool disqualified = distance < DisqualificationDistance;
@@ -96,24 +92,8 @@ namespace BridgeCalculator.BridgeTimer
 								$"Longest Time: {longestTimeOnBridge} [{longestTimeMinutes:00}:{longestTimeSeconds:00.0000}]\n" +
 								$"Bridge Length: {bridgeLength}\tPerfect Distance: {perfectDistance}\n" +
 								$"Distance: {distance} | Shortest: {shortestDistance} | Longest: {longestDistance}\n");
-		}
-		
-		public void StopAllTimers()
-		{
-			if (startedSideTimer)
-			{
-				StopSideTimer(false);
-			}
 
-			if (startedTotalTimer)
-			{
-				StopTotalTimer(bridgeEnteredPosition);
-			}
-		}
-
-		public void OnDestroy()
-		{
-			
+			*/
 		}
 	}
 }

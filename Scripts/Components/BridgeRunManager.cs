@@ -106,6 +106,7 @@ namespace BridgeCalculator.Components
 				}
 				else
 				{
+					// Technically should never happen
 					BridgeRunLogger.LeftBridgeNoRun();
 				}
 			}
@@ -123,7 +124,9 @@ namespace BridgeCalculator.Components
 
 		private bool CheckIfFellOffBridge(Vector3 position)
 		{
-			float threshold = transform.position.y - 0.30f;
+			float threshold = transform.position.y - 0.50f;
+			
+			LoggerUtil.LogError($"threshold: {threshold} | [{position.y}] | possible threshold: {transform.position.y - triggerCollider.bounds.extents.y}"); //TODO REMOVE
 
 			bool fell = position.y < threshold;
 
@@ -132,12 +135,10 @@ namespace BridgeCalculator.Components
 
 		private void FellOffBridge(Collider collider)
 		{
-			if (currentRuns.TryGetValue(collider, out BridgeRun run))
+			if (currentRuns.Remove(collider, out BridgeRun run))
 			{
 				LoggerUtil.LogError($"{run.PlayerName} fell off the bridge!\n");
 				run.FellOffBridge();
-				
-				currentRuns.Remove(collider);
 			}
 		}
 

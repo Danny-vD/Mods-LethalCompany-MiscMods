@@ -10,9 +10,9 @@ namespace BridgeCalculator.BridgeTimer
 		public static float DisqualificationDistance => BridgeRunManager.BridgeLength - 1; // BridgeLength - 1 to allow jumping off at the side at the end/beginning
 
 		public string PlayerName { get; private set; }
-		
+
 		private readonly Vector3 bridgeEnteredPosition;
-		
+
 		private List<SideJump> jumps;
 		private SideJump currentSideJump;
 
@@ -22,11 +22,11 @@ namespace BridgeCalculator.BridgeTimer
 		public BridgeRun(BridgeTrigger trigger, string playerName, Vector3 enterPosition)
 		{
 			bridgeTrigger = trigger;
-			
+
 			PlayerName = playerName;
 
 			bridgeEnteredPosition = enterPosition;
-			bridgeTimer           = new BridgeTimer(this, enterPosition);
+			bridgeTimer           = new BridgeTimer();
 
 			jumps = new List<SideJump>();
 		}
@@ -54,12 +54,14 @@ namespace BridgeCalculator.BridgeTimer
 				{
 					jumps.Add(currentSideJump);
 				}
+
+				currentSideJump = null;
 			}
 		}
 
 		public void FellOffBridge()
 		{
-			bridgeTimer.StopAllTimers();
+			bridgeTimer.StopTimer();
 
 			EndSideJump(false);
 		}
@@ -74,25 +76,23 @@ namespace BridgeCalculator.BridgeTimer
 			}
 			else
 			{
-				bridgeTimer.StopTotalTimer(bridgeLeftPosition, true);
+				bridgeTimer.StopTimer();
 			}
 		}
 
 		public void OnDestroy()
 		{
 			bridgeTrigger = null;
-			
-			bridgeTimer.OnDestroy();
-			bridgeTimer     = null;
+			bridgeTimer   = null;
 
 			currentSideJump?.OnDestroy();
 			currentSideJump = null;
-			
+
 			foreach (SideJump jump in jumps)
 			{
 				jump.OnDestroy();
 			}
-			
+
 			jumps.Clear();
 		}
 	}
