@@ -11,6 +11,7 @@ namespace BridgeCalculator.Utils
 		
 		// BRIDGE
 		public static ConfigEntry<bool> ShouldBridgeLogHealth;
+		public static ConfigEntry<float> SecondsBetweenHealthLogs;
 		public static ConfigEntry<bool> PrintHealthWhenNotOnBridge;
 		public static ConfigEntry<bool> ShouldBridgeReset;
 		
@@ -38,11 +39,12 @@ namespace BridgeCalculator.Utils
 			
 			// BRIDGE
 			ShouldBridgeLogHealth      = config.Bind("1. Bridge", "shouldBridgeLogHealth", true, "Should the bridge print his health?");
+			SecondsBetweenHealthLogs   = config.Bind("1. Bridge", "secondsBetweenHealthLogs", 0.25f, "The frequency at which to log the health of the bridge");
 			PrintHealthWhenNotOnBridge = config.Bind("1. Bridge", "printHealthWhenNotOnBridge", false, "Should the bridge health be printed when not on the bridge?");
 			ShouldBridgeReset          = config.Bind("1. Bridge", "shouldBridgeReset", true, $"If true, the bridge will restore itself after {BridgeResetter.RESET_TIME} seconds");
 			
 			// PLAYER
-			ShouldPlayerBeInvincible = config.Bind("2. Player", "shouldPlayerBeInvincible", false, "Should the player never die?");
+			ShouldPlayerBeInvincible = config.Bind("2. Player", "shouldPlayerBeInvincible", false, "Should the player be immune to damage?");
 			
 			// OTHER
 			StopTimeFromPassing = config.Bind("3. Other", "stopTimeFromPassing", true, "Stop time of day from advancing");

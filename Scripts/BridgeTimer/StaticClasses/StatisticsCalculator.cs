@@ -15,7 +15,7 @@ namespace BridgeCalculator.BridgeTimer.StaticClasses
 
 			float distance = Vector3.Distance(bridgeEnteredPosition, bridgeLeftPosition);
 
-			bool disqualified = distance < BridgeRun.BridgeDistance;
+			bool disqualified = distance < run.AllowableFullLength;
 
 			string timeMessage = string.Empty;
 
@@ -55,7 +55,7 @@ namespace BridgeCalculator.BridgeTimer.StaticClasses
 			return $"Time: {timerValue} seconds {timeMessage}\n" +
 				   $"Fastest Time: {statistics.FastestTimeAcross} [{fastestTimeMinutes:00}:{fastestTimeSeconds:00.0000}]\n" +
 				   $"Longest Time: {statistics.LongestTimeOnBridge} [{longestTimeMinutes:00}:{longestTimeSeconds:00.0000}]\n" +
-				   $"Bridge Length: {BridgeRunManager.BridgeLength}\tPerfect Distance: {perfectDistance}\n" +
+				   $"Perfect Distance: {perfectDistance} | Bridge Length: {run.BridgeLength}\n" +
 				   $"Distance: {distance} | Shortest: {statistics.ShortestDistance} | Longest: {statistics.LongestDistance}";
 		}
 
@@ -63,7 +63,7 @@ namespace BridgeCalculator.BridgeTimer.StaticClasses
 		{
 			float healthRegained = bridgeHealth - jumpStartedDurability;
 
-			return $"Jump time: {jumpTime} seconds\nHealth regained: {healthRegained * 100}%\nCurrent Health: {bridgeHealth * 100}%";
+			return $"Jump time: {jumpTime} seconds\nHealth regained: {healthRegained:P2}\nCurrent Health: {bridgeHealth:P2}";
 		}
 	}
 }

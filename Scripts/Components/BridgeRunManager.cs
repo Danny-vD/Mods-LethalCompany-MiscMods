@@ -12,7 +12,9 @@ namespace BridgeCalculator.Components
 {
 	public class BridgeRunManager : BetterMonoBehaviour
 	{
-		public static float BridgeLength = 0;
+		public float BridgeLength = 0;
+
+		private float belowBridgeThreshold;
 
 		private readonly Dictionary<Collider, BridgeRun> currentRuns = new Dictionary<Collider, BridgeRun>();
 
@@ -27,6 +29,8 @@ namespace BridgeCalculator.Components
 
 			triggerCollider = GetComponent<Collider>();
 			BridgeLength    = triggerCollider.bounds.extents.z * 2;
+
+			belowBridgeThreshold = transform.position.y - 2;
 
 			BridgeFallenEvent.OnBridgeFallen += BridgeCollapsed;
 		}
@@ -68,8 +72,7 @@ namespace BridgeCalculator.Components
 						statisticsMap.Add(other, statistics);
 					}
 					
-					
-					run = new BridgeRun(bridgeTrigger, playerControllerB.playerUsername, enterPosition, statistics);
+					run = new BridgeRun(bridgeTrigger, playerControllerB.playerUsername, enterPosition, statistics, BridgeLength);
 					BridgeRunLogger.EnteredBridge(playerControllerB.playerUsername);
 
 					currentRuns.Add(other, run);
@@ -93,7 +96,12 @@ namespace BridgeCalculator.Components
 
 				if (currentRuns.TryGetValue(other, out BridgeRun run))
 				{
-					run.LeftBridgeTrigger(bridgeLeftPosition);
+					bool runstopped = run.LeftBridgeTrigger(bridgeLeftPosition);
+
+					if (runstopped)
+					{
+						currentRuns.Remove(other);
+					}
 				}
 				else
 				{
@@ -107,7 +115,7 @@ namespace BridgeCalculator.Components
 		{
 			foreach (KeyValuePair<Collider, BridgeRun> pair in currentRuns)
 			{
-				pair.Value.StopRun();
+				pair.Value.StopRun(true);
 			}
 			
 			currentRuns.Clear();
@@ -115,11 +123,9 @@ namespace BridgeCalculator.Components
 
 		private bool CheckIfFellOffBridge(Vector3 position)
 		{
-			float threshold = transform.position.y - 0.50f;
-			
-			LoggerUtil.LogError($"TRY TO FIND LOWEST POSSIBLE THRESHOLD\nthreshold: {threshold} | [{position.y}] | possible threshold: {transform.position.y - triggerCollider.bounds.extents.y}"); //TODO REMOVE
+			//LoggerUtil.LogWarning($"TRY TO FIND LOWEST POSSIBLE THRESHOLD\nThreshold: {belowBridgeThreshold}\nPosition: [{position.y}]\n"); //TODO REMOVE
 
-			bool fell = position.y < threshold;
+			bool fell = position.y < belowBridgeThreshold;
 
 			return fell;
 		}
@@ -128,8 +134,7 @@ namespace BridgeCalculator.Components
 		{
 			if (currentRuns.Remove(collider, out BridgeRun run))
 			{
-				BridgeRunLogger.FellOffBridge(run.PlayerName);
-				run.StopRun();
+				run.StopRun(true);
 			}
 		}
 

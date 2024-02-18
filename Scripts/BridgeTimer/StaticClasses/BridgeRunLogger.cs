@@ -6,7 +6,7 @@ namespace BridgeCalculator.BridgeTimer.StaticClasses
 	{
 		public static void EnteredBridge(string playerName)
 		{
-			LoggerUtil.LogError($"{playerName} entered bridge\n");
+			LoggerUtil.LogError($"\n{playerName} entered bridge\n");
 		}
 
 		public static void JumpedOffSide(string playerName)
@@ -24,14 +24,16 @@ namespace BridgeCalculator.BridgeTimer.StaticClasses
 			LoggerUtil.LogWarning($"jump {jumpNumber}!\n{jumpInfo}\n");
 		}
 
-		public static void EndRunStatistics(string runInfo)
-		{
-			LoggerUtil.LogError($"Player left bridge\n{runInfo}\n");
-		}
-
-		public static void FellOffBridge(string playerName)
-		{
-			LoggerUtil.LogError($"{playerName} fell off the bridge!\n");
+		public static void EndRunStatistics(string playerName, string runInfo, bool fellOffBridge)
+		{	
+			if (fellOffBridge)
+			{
+				LoggerUtil.LogError($"{playerName} fell off the bridge!\n{runInfo}\n");
+			}
+			else
+			{
+				LoggerUtil.LogError($"{playerName} left the bridge!\n{runInfo}\n");
+			}
 		}
 
 		public static void LeftBridgeNoRun()

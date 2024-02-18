@@ -34,7 +34,7 @@ namespace BridgeCalculator.BridgeTimer
 
 				if (jumpTimer > maximumSideJumpTimer) // Fell off the bridge
 				{
-					bridgeRun.StopRun();
+					bridgeRun.StopRun(true);
 				}
 			}
 		}
