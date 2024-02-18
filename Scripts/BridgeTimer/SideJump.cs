@@ -15,6 +15,8 @@ namespace BridgeCalculator.BridgeTimer
 
 		private BridgeRun bridgeRun;
 		private BridgeTrigger bridgeTrigger;
+
+		private string jumpInfo;
 		
 		public SideJump(BridgeRun run, BridgeTrigger trigger)
 		{
@@ -51,8 +53,19 @@ namespace BridgeCalculator.BridgeTimer
 
 			if (success)
 			{
-				BridgeRunLogger.SuccessfulSideJump(jumpTimer, jumpStartedDurability, bridgeTrigger.bridgeDurability);
+				jumpInfo = StatisticsCalculator.GetSideJumpString(jumpTimer, jumpStartedDurability, bridgeTrigger.bridgeDurability);
+				LogInfo();
 			}
+		}
+
+		public void LogInfo()
+		{
+			BridgeRunLogger.SuccessfulSideJump(jumpInfo);
+		}
+		
+		public void LogInfo(int jumpNumber)
+		{
+			BridgeRunLogger.SideJumpStatistics(jumpInfo, jumpNumber);
 		}
 		
 		public void OnDestroy()

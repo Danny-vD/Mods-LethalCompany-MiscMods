@@ -2,6 +2,7 @@
 using BridgeCalculator.BaseClasses;
 using BridgeCalculator.BridgeTimer;
 using BridgeCalculator.BridgeTimer.StaticClasses;
+using BridgeCalculator.Data;
 using BridgeCalculator.Events;
 using BridgeCalculator.Utils;
 using GameNetcodeStuff;
@@ -14,17 +15,11 @@ namespace BridgeCalculator.Components
 		public static float BridgeLength = 0;
 
 		private readonly Dictionary<Collider, BridgeRun> currentRuns = new Dictionary<Collider, BridgeRun>();
+
+		private readonly Dictionary<Collider, PlayerRunStatistics> statisticsMap = new Dictionary<Collider, PlayerRunStatistics>();
 		
 		private Collider triggerCollider;
 		private BridgeTrigger bridgeTrigger;
-
-		private float fastestTime = float.MaxValue;
-		private float longestTimeOnBridge = 0;
-
-		private float shortestDistance = float.MaxValue;
-		private float longestDistance = 0;
-
-		private Vector3 bridgeEnteredPosition;
 
 		private void Awake()
 		{
@@ -66,8 +61,15 @@ namespace BridgeCalculator.Components
 				else
 				{
 					PlayerControllerB playerControllerB = other.gameObject.GetComponent<PlayerControllerB>();
-					run = new BridgeRun(bridgeTrigger, playerControllerB.playerUsername, enterPosition);
+
+					if (!statisticsMap.TryGetValue(other, out PlayerRunStatistics statistics))
+					{
+						statistics = new PlayerRunStatistics();
+						statisticsMap.Add(other, statistics);
+					}
 					
+					
+					run = new BridgeRun(bridgeTrigger, playerControllerB.playerUsername, enterPosition, statistics);
 					BridgeRunLogger.EnteredBridge(playerControllerB.playerUsername);
 
 					currentRuns.Add(other, run);
@@ -115,7 +117,7 @@ namespace BridgeCalculator.Components
 		{
 			float threshold = transform.position.y - 0.50f;
 			
-			LoggerUtil.LogError($"threshold: {threshold} | [{position.y}] | possible threshold: {transform.position.y - triggerCollider.bounds.extents.y}"); //TODO REMOVE
+			LoggerUtil.LogError($"TRY TO FIND LOWEST POSSIBLE THRESHOLD\nthreshold: {threshold} | [{position.y}] | possible threshold: {transform.position.y - triggerCollider.bounds.extents.y}"); //TODO REMOVE
 
 			bool fell = position.y < threshold;
 

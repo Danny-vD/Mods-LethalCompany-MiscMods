@@ -14,12 +14,19 @@ namespace BridgeCalculator.BridgeTimer.StaticClasses
 			LoggerUtil.LogWarning($"{playerName} jumped off the side!\n");
 		}
 
-		public static void SuccessfulSideJump(float jumpTime, float jumpStartedDurability, float bridgeHealth)
+		public static void SuccessfulSideJump(string jumpInfo)
 		{
-			float healthRegained = bridgeHealth - jumpStartedDurability;
-			
-			LoggerUtil.LogWarning(
-				$"Successful jump!\nJump time: {jumpTime} seconds\nHealth regained: {healthRegained * 100}%\nCurrent Health: {bridgeHealth * 100}%\n");
+			LoggerUtil.LogWarning($"Successful jump!\n{jumpInfo}\n");
+		}
+
+		public static void SideJumpStatistics(string jumpInfo, int jumpNumber)
+		{
+			LoggerUtil.LogWarning($"jump {jumpNumber}!\n{jumpInfo}\n");
+		}
+
+		public static void EndRunStatistics(string runInfo)
+		{
+			LoggerUtil.LogError($"Player left bridge\n{runInfo}\n");
 		}
 
 		public static void FellOffBridge(string playerName)
