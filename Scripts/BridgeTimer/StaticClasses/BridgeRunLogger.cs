@@ -36,6 +36,18 @@ namespace BridgeCalculator.BridgeTimer.StaticClasses
 			}
 		}
 
+		public static void AllJumpsStatistics(float totalJumpTime, int jumpCount, float longestJumpTime, float shortestJumpTime, float totalHealthRegained)
+		{
+			float averageJumpTime = totalJumpTime / jumpCount;
+			
+			LoggerUtil.LogError("Jump statistics:\n" +
+								$"Total time: {totalJumpTime} seconds\n" +
+								$"Longest jump: {longestJumpTime} seconds\n" +
+								$"Shortest jump: {shortestJumpTime} seconds\n" +
+								$"Average jump: {averageJumpTime} seconds\n" +
+								$"Health regained: {totalHealthRegained}\n");
+		}
+
 		public static void LeftBridgeNoRun()
 		{
 			LoggerUtil.LogError("A player left the bridge but did not start a run\n");

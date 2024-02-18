@@ -59,10 +59,8 @@ namespace BridgeCalculator.BridgeTimer.StaticClasses
 				   $"Distance: {distance} | Shortest: {statistics.ShortestDistance} | Longest: {statistics.LongestDistance}";
 		}
 
-		public static string GetSideJumpString(float jumpTime, float jumpStartedDurability, float bridgeHealth)
+		public static string GetSideJumpString(float jumpTime, float healthRegained, float bridgeHealth)
 		{
-			float healthRegained = bridgeHealth - jumpStartedDurability;
-
 			return $"Jump time: {jumpTime} seconds\nHealth regained: {healthRegained:P2}\nCurrent Health: {bridgeHealth:P2}";
 		}
 	}

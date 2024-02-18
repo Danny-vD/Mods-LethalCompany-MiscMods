@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BridgeCalculator.BridgeTimer.StaticClasses;
 using BridgeCalculator.Components;
 using BridgeCalculator.Data;
@@ -85,10 +86,11 @@ namespace BridgeCalculator.BridgeTimer
 		public bool LeftBridgeTrigger(Vector3 bridgeExitPosition, Transform transform)
 		{
 			bool runStopped = false;
-			float distanceToA = Mathf.Abs(bridgeExitPosition.z - BridgeRunManager.TriggerBounds.Item1);
-			float distanceToB = Mathf.Abs(bridgeExitPosition.z - BridgeRunManager.TriggerBounds.Item2);
 
-			if (distanceToA < 2 || distanceToB < 2) // (distance < AllowableFullLength && distance > 2f) // 2 is a reasonable distance that prevents walking off the bridge at the same position from counting as a side jump
+			bool leftPastA = bridgeExitPosition.z <= BridgeRunManager.TriggerBounds.Item1;
+			bool leftPastB = bridgeExitPosition.z >= BridgeRunManager.TriggerBounds.Item2;
+			
+			if (leftPastA || leftPastB) // 2 is a reasonable distance that prevents walking off the bridge at the same position from counting as a side jump
 			{
 				bridgeLeftPosition = bridgeExitPosition;
 				StopRun(false);
@@ -108,12 +110,34 @@ namespace BridgeCalculator.BridgeTimer
 			string runInfo = StatisticsCalculator.GetStatisticsString(bridgeEnteredPosition, bridgeLeftPosition, Statistics, this);
 			
 			BridgeRunLogger.EndRunStatistics(PlayerName, runInfo, fellOffBridge);
+
+			float totalJumpTime = 0;
+			float longestJumpTime = float.NegativeInfinity;
+			float shortestJumpTime = float.PositiveInfinity;
+			float totalHealthRegained = 0;
 			
 			for (int i = 0; i < jumps.Count;)
 			{
 				SideJump jump = jumps[i];
 				jump.LogInfo(++i);
+
+				float jumpTime = jump.JumpTimerValue;
+
+				totalJumpTime       += jumpTime;
+				totalHealthRegained += jump.HealthRegained;
+
+				if (jumpTime > longestJumpTime)
+				{
+					longestJumpTime = jumpTime;
+				}
+
+				if (jumpTime < shortestJumpTime)
+				{
+					shortestJumpTime = jumpTime;
+				}
 			}
+			
+			BridgeRunLogger.AllJumpsStatistics(totalJumpTime, jumps.Count, longestJumpTime, shortestJumpTime, totalHealthRegained);
 		}
 
 		public void OnDestroy()

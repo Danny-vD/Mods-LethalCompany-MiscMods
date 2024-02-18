@@ -7,26 +7,28 @@ namespace BridgeCalculator.BridgeTimer
 	public class SideJump
 	{
 		private const float maximumSideJumpTimer = 5f;
+
+		public bool IsJumping { get; private set; }
 		
-		public bool IsJumping = false;
+		public float JumpTimerValue { get; private set; }
 		
+		public float HealthRegained { get; private set; }
+
 		private float jumpStartedDurability;
-		
-		private float jumpTimer = 0;
 
 		private BridgeRun bridgeRun;
 		private BridgeTrigger bridgeTrigger;
-		
+
 		private Transform jumpingTransform;
 		private BridgeRunManager bridgeRunManager;
 
 		private string jumpInfo;
-		
+
 		public SideJump(Transform transform, BridgeRun run, BridgeTrigger trigger, BridgeRunManager bridgeRunManager)
 		{
 			bridgeRun     = run;
 			bridgeTrigger = trigger;
-			
+
 			StartTimer();
 		}
 
@@ -34,9 +36,9 @@ namespace BridgeCalculator.BridgeTimer
 		{
 			if (IsJumping)
 			{
-				jumpTimer += Time.unscaledDeltaTime;
+				JumpTimerValue += Time.unscaledDeltaTime;
 
-				if (jumpTimer > maximumSideJumpTimer) // Fell off the bridge
+				if (JumpTimerValue > maximumSideJumpTimer) // Fell off the bridge
 				{
 					bridgeRun.StopRun(true);
 					return;
@@ -53,8 +55,8 @@ namespace BridgeCalculator.BridgeTimer
 		{
 			jumpStartedDurability = bridgeTrigger.bridgeDurability;
 
-			jumpTimer  = 0;
-			IsJumping = true;
+			JumpTimerValue = 0;
+			IsJumping      = true;
 		}
 
 		public void EndJump(bool success)
@@ -63,7 +65,8 @@ namespace BridgeCalculator.BridgeTimer
 
 			if (success)
 			{
-				jumpInfo = StatisticsCalculator.GetSideJumpString(jumpTimer, jumpStartedDurability, bridgeTrigger.bridgeDurability);
+				HealthRegained = bridgeTrigger.bridgeDurability - jumpStartedDurability;
+				jumpInfo       = StatisticsCalculator.GetSideJumpString(JumpTimerValue, HealthRegained, bridgeTrigger.bridgeDurability);
 				LogInfo();
 			}
 		}
@@ -72,7 +75,7 @@ namespace BridgeCalculator.BridgeTimer
 		{
 			BridgeRunLogger.SuccessfulSideJump(jumpInfo);
 		}
-		
+
 		public void LogInfo(int jumpNumber)
 		{
 			BridgeRunLogger.SideJumpStatistics(jumpInfo, jumpNumber);
@@ -83,7 +86,7 @@ namespace BridgeCalculator.BridgeTimer
 			Vector3 playerPosition = jumpingTransform.position;
 			return playerPosition.z <= bridgeRunManager.TriggerBounds.Item1 || playerPosition.z >= bridgeRunManager.TriggerBounds.Item2;
 		}
-		
+
 		public void OnDestroy()
 		{
 			bridgeRun        = null;

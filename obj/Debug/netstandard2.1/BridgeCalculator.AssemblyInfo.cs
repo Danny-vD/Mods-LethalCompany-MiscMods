@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("Calculates and keeps statistics for crossing the bridge")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bdf8a54efcdc643ef3b4ced08da806fb0e0af360")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+61f4faca95f022d1388570fee1d00c1715927ec6")]
 [assembly: System.Reflection.AssemblyProductAttribute("BridgeCalculator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BridgeCalculator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
