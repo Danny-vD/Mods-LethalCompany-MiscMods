@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BridgeCalculator.BaseClasses;
 using BridgeCalculator.BridgeTimer;
 using BridgeCalculator.BridgeTimer.StaticClasses;
@@ -12,7 +13,9 @@ namespace BridgeCalculator.Components
 {
 	public class BridgeRunManager : BetterMonoBehaviour
 	{
-		public float BridgeLength = 0;
+		public float BridgeLength { get; private set; }
+
+		public Tuple<float, float> TriggerBounds { get; private set; }
 
 		private float belowBridgeThreshold;
 
@@ -28,9 +31,16 @@ namespace BridgeCalculator.Components
 			bridgeTrigger = GetComponent<BridgeTrigger>();
 
 			triggerCollider = GetComponent<Collider>();
-			BridgeLength    = triggerCollider.bounds.extents.z * 2;
+			Bounds triggerBounds = triggerCollider.bounds;
+			BridgeLength    = triggerBounds.extents.z * 2;
 
-			belowBridgeThreshold = transform.position.y - 2;
+			Vector3 position = transform.position;
+			float triggerMinimumZValue = position.z + triggerBounds.center.z - triggerBounds.extents.z;
+			float triggerMaximumZValue = position.z + triggerBounds.center.z + triggerBounds.extents.z;
+
+			TriggerBounds = new Tuple<float, float>(triggerMinimumZValue, triggerMaximumZValue);
+
+			belowBridgeThreshold = position.y - 1;
 
 			BridgeFallenEvent.OnBridgeFallen += BridgeCollapsed;
 		}
@@ -72,7 +82,7 @@ namespace BridgeCalculator.Components
 						statisticsMap.Add(other, statistics);
 					}
 					
-					run = new BridgeRun(bridgeTrigger, playerControllerB.playerUsername, enterPosition, statistics, BridgeLength);
+					run = new BridgeRun(bridgeTrigger, playerControllerB.playerUsername, enterPosition, statistics, this);
 					BridgeRunLogger.EnteredBridge(playerControllerB.playerUsername);
 
 					currentRuns.Add(other, run);
@@ -96,7 +106,7 @@ namespace BridgeCalculator.Components
 
 				if (currentRuns.TryGetValue(other, out BridgeRun run))
 				{
-					bool runstopped = run.LeftBridgeTrigger(bridgeLeftPosition);
+					bool runstopped = run.LeftBridgeTrigger(bridgeLeftPosition, other.transform);
 
 					if (runstopped)
 					{

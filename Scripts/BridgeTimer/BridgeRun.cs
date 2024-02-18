@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BridgeCalculator.BridgeTimer.StaticClasses;
+using BridgeCalculator.Components;
 using BridgeCalculator.Data;
 using UnityEngine;
 
@@ -7,9 +8,9 @@ namespace BridgeCalculator.BridgeTimer
 {
 	public class BridgeRun
 	{
-		public float AllowableFullLength => BridgeLength - 1; // BridgeLength - 1 to allow jumping off at the side at the end/beginning
-		
-		public float BridgeLength { get; private set; }
+		public float AllowableFullLength => BridgeLength - 2; // BridgeLength - 1 to allow jumping off at the side at the end/beginning
+
+		public float BridgeLength => BridgeRunManager.BridgeLength;
 
 		public string PlayerName { get; private set; }
 
@@ -17,13 +18,15 @@ namespace BridgeCalculator.BridgeTimer
 		public BridgeTrigger BridgeTrigger { get; private set; }
 		public PlayerRunStatistics Statistics { get; private set; }
 		
+		public BridgeRunManager BridgeRunManager { get; private set; }
+		
 		private readonly Vector3 bridgeEnteredPosition;
 		private Vector3 bridgeLeftPosition;
 
 		private List<SideJump> jumps;
 		private SideJump currentSideJump;
 
-		public BridgeRun(BridgeTrigger trigger, string playerName, Vector3 enterPosition, PlayerRunStatistics statistics, float fullBridgeLength)
+		public BridgeRun(BridgeTrigger trigger, string playerName, Vector3 enterPosition, PlayerRunStatistics statistics, BridgeRunManager bridgeRunManager)
 		{
 			BridgeTrigger = trigger;
 
@@ -36,7 +39,7 @@ namespace BridgeCalculator.BridgeTimer
 
 			Statistics = statistics;
 
-			BridgeLength = fullBridgeLength;
+			BridgeRunManager = bridgeRunManager;
 		}
 
 		public void Update()
@@ -55,10 +58,10 @@ namespace BridgeCalculator.BridgeTimer
 			LogInfo(fellOffBridge);
 		}
 
-		private void StartSideJump()
+		private void StartSideJump(Transform transform)
 		{
 			BridgeRunLogger.JumpedOffSide(PlayerName);
-			currentSideJump = new SideJump(this, BridgeTrigger);
+			currentSideJump = new SideJump(transform, this, BridgeTrigger, BridgeRunManager);
 			
 			BridgeTimer.SideJumpStarted();
 		}
@@ -79,21 +82,22 @@ namespace BridgeCalculator.BridgeTimer
 			}
 		}
 
-		public bool LeftBridgeTrigger(Vector3 bridgeExitPosition)
+		public bool LeftBridgeTrigger(Vector3 bridgeExitPosition, Transform transform)
 		{
 			bool runStopped = false;
-			float distance = Vector3.Distance(bridgeEnteredPosition, bridgeExitPosition);
+			float distanceToA = Mathf.Abs(bridgeExitPosition.z - BridgeRunManager.TriggerBounds.Item1);
+			float distanceToB = Mathf.Abs(bridgeExitPosition.z - BridgeRunManager.TriggerBounds.Item2);
 
-			if (distance < AllowableFullLength && distance > 2f) // 2 is a reasonable distance that prevents walking off the bridge at the same position from counting as a side jump
-			{
-				StartSideJump();
-			}
-			else
+			if (distanceToA < 2 || distanceToB < 2) // (distance < AllowableFullLength && distance > 2f) // 2 is a reasonable distance that prevents walking off the bridge at the same position from counting as a side jump
 			{
 				bridgeLeftPosition = bridgeExitPosition;
 				StopRun(false);
 				
 				runStopped = true;
+			}
+			else
+			{
+				StartSideJump(transform);
 			}
 
 			return runStopped;
@@ -114,6 +118,8 @@ namespace BridgeCalculator.BridgeTimer
 
 		public void OnDestroy()
 		{
+			BridgeRunManager = null;
+			
 			BridgeTrigger = null;
 			BridgeTimer   = null;
 

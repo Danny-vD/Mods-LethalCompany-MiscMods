@@ -1,4 +1,5 @@
 ﻿using BridgeCalculator.BridgeTimer.StaticClasses;
+using BridgeCalculator.Components;
 using UnityEngine;
 
 namespace BridgeCalculator.BridgeTimer
@@ -15,10 +16,13 @@ namespace BridgeCalculator.BridgeTimer
 
 		private BridgeRun bridgeRun;
 		private BridgeTrigger bridgeTrigger;
+		
+		private Transform jumpingTransform;
+		private BridgeRunManager bridgeRunManager;
 
 		private string jumpInfo;
 		
-		public SideJump(BridgeRun run, BridgeTrigger trigger)
+		public SideJump(Transform transform, BridgeRun run, BridgeTrigger trigger, BridgeRunManager bridgeRunManager)
 		{
 			bridgeRun     = run;
 			bridgeTrigger = trigger;
@@ -35,6 +39,12 @@ namespace BridgeCalculator.BridgeTimer
 				if (jumpTimer > maximumSideJumpTimer) // Fell off the bridge
 				{
 					bridgeRun.StopRun(true);
+					return;
+				}
+
+				if (WentOutsideOfBridge())
+				{
+					bridgeRun.StopRun(false);
 				}
 			}
 		}
@@ -67,11 +77,19 @@ namespace BridgeCalculator.BridgeTimer
 		{
 			BridgeRunLogger.SideJumpStatistics(jumpInfo, jumpNumber);
 		}
+
+		private bool WentOutsideOfBridge()
+		{
+			Vector3 playerPosition = jumpingTransform.position;
+			return playerPosition.z <= bridgeRunManager.TriggerBounds.Item1 || playerPosition.z >= bridgeRunManager.TriggerBounds.Item2;
+		}
 		
 		public void OnDestroy()
 		{
-			bridgeRun     = null;
-			bridgeTrigger = null;
+			bridgeRun        = null;
+			bridgeTrigger    = null;
+			jumpingTransform = null;
+			bridgeRunManager = null;
 		}
 	}
 }
