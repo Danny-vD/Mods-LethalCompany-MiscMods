@@ -123,7 +123,7 @@ namespace BridgeCalculator.Components
 
 		private bool CheckIfFellOffBridge(Vector3 position)
 		{
-			//LoggerUtil.LogWarning($"TRY TO FIND LOWEST POSSIBLE THRESHOLD\nThreshold: {belowBridgeThreshold}\nPosition: [{position.y}]\n"); //TODO REMOVE
+			LoggerUtil.LogWarning($"TRY TO FIND LOWEST POSSIBLE THRESHOLD\nThreshold: {belowBridgeThreshold}\nPosition: [{position.y}]\n"); //TODO REMOVE
 
 			bool fell = position.y < belowBridgeThreshold;
 
