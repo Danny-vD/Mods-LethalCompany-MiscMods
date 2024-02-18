@@ -59,12 +59,15 @@ namespace BridgeCalculator.BridgeTimer
 		{
 			BridgeRunLogger.JumpedOffSide(PlayerName);
 			currentSideJump = new SideJump(this, BridgeTrigger);
+			
+			BridgeTimer.SideJumpStarted();
 		}
 
 		public void EndSideJump(bool jumpSuccessful)
 		{
 			if (currentSideJump != null)
 			{
+				BridgeTimer.EndSideJump(jumpSuccessful);
 				currentSideJump.EndJump(jumpSuccessful);
 
 				if (jumpSuccessful)
