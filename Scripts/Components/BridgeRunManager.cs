@@ -5,7 +5,6 @@ using BridgeCalculator.BridgeTimer;
 using BridgeCalculator.BridgeTimer.StaticClasses;
 using BridgeCalculator.Data;
 using BridgeCalculator.Events;
-using BridgeCalculator.Utils;
 using GameNetcodeStuff;
 using UnityEngine;
 
@@ -33,14 +32,13 @@ namespace BridgeCalculator.Components
 			triggerCollider = GetComponent<Collider>();
 			Bounds triggerBounds = triggerCollider.bounds;
 			BridgeLength    = triggerBounds.extents.z * 2;
-
-			Vector3 position = transform.position;
-			float triggerMinimumZValue = position.z + triggerBounds.center.z - triggerBounds.extents.z;
-			float triggerMaximumZValue = position.z + triggerBounds.center.z + triggerBounds.extents.z;
+			
+			float triggerMinimumZValue = triggerBounds.center.z - triggerBounds.extents.z;
+			float triggerMaximumZValue = triggerBounds.center.z + triggerBounds.extents.z;
 
 			TriggerBounds = new Tuple<float, float>(triggerMinimumZValue, triggerMaximumZValue);
 
-			belowBridgeThreshold = position.y - 1;
+			belowBridgeThreshold = transform.position.y - 1;
 
 			BridgeFallenEvent.OnBridgeFallen += BridgeCollapsed;
 		}
@@ -133,8 +131,6 @@ namespace BridgeCalculator.Components
 
 		private bool CheckIfFellOffBridge(Vector3 position)
 		{
-			//LoggerUtil.LogWarning($"TRY TO FIND LOWEST POSSIBLE THRESHOLD\nThreshold: {belowBridgeThreshold}\nPosition: [{position.y}]\n"); //TODO REMOVE
-
 			bool fell = position.y < belowBridgeThreshold;
 
 			return fell;

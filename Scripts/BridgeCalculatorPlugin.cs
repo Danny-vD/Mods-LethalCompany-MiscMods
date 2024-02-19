@@ -1,8 +1,6 @@
-﻿using System;
-using BepInEx;
+﻿using BepInEx;
 using BridgeCalculator.Utils;
 using Dissonance;
-using UnityEngine;
 
 namespace BridgeCalculator
 {

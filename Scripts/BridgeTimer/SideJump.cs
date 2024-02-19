@@ -29,6 +29,8 @@ namespace BridgeCalculator.BridgeTimer
 			bridgeRun     = run;
 			bridgeTrigger = trigger;
 
+			jumpingTransform = transform;
+
 			StartTimer();
 		}
 
