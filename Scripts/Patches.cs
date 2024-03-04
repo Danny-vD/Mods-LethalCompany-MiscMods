@@ -41,7 +41,25 @@ namespace BridgeCalculator
 		[HarmonyPatch(typeof(PlayerControllerB), nameof(PlayerControllerB.DamagePlayer)), HarmonyPrefix]
 		internal static bool PlayerControllerBDamagePlayerPatch(PlayerControllerB __instance)
 		{
-			return !ConfigUtil.ShouldPlayerBeInvincible.Value; // Skips the original method
+			if (ConfigUtil.ShouldPlayerBeInvincible.Value)
+			{
+				__instance.takingFallDamage = false;
+				return false; // Skips the original method
+			}
+
+			return true;
+		}
+		
+		[HarmonyPatch(typeof(PlayerControllerB), nameof(PlayerControllerB.AllowPlayerDeath)), HarmonyPrefix]
+		internal static bool PlayerControllerBAllowPlayerDeathPatch(PlayerControllerB __instance, ref bool __result)
+		{
+			if (ConfigUtil.ShouldPlayerBeInvincible.Value)
+			{
+				__result = false;
+				return false; // Skips the original method
+			}
+
+			return true;
 		}
 
 // TIME STOPPED
