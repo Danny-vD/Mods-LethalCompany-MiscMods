@@ -56,6 +56,9 @@ namespace BridgeCalculator
 			if (ConfigUtil.ShouldPlayerBeInvincible.Value)
 			{
 				__result = false;
+				
+				HUDManager.Instance.HideHUD(true);
+				HUDManager.Instance.HideHUD(false);
 				return false; // Skips the original method
 			}
 
