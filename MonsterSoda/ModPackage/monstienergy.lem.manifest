@@ -1,0 +1,46 @@
+ManifestFileVersion: 0
+CRC: 1846999041
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 999eedd0d8964096b286eb54ea5b9acd
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9d30d8c7e1cfd351a6edc9e5a9f8477e
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 999eedd0d8964096b286eb54ea5b9acd
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 83
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Mods/MonstiEnergy/Audio/SqueezyDrop.wav
+- Assets/Mods/MonstiEnergy/Textures/BigPosterTexture.png
+- Assets/Mods/MonstiEnergy/Textures/MonstiTexture.png
+- Assets/Mods/MonstiEnergy/Audio/SqueezySwitch.wav
+- Assets/Mods/MonstiEnergy/Textures/SqueezyTexture.png
+- Assets/Mods/MonstiEnergy/Textures/AllPosters.png
+- Assets/Mods/MonstiEnergy/Audio/SqueezyPickUp.wav
+- Assets/Mods/MonstiEnergy/Audio/SqueezyLoop.wav
+- Assets/Mods/MonstiEnergy/Models/Squeezy.obj
+- Assets/Mods/MonstiEnergy/Textures/SqueezySadTexture.png
+- Assets/Mods/MonstiEnergy/Models/SqueezyHeld.obj
+Dependencies: []
