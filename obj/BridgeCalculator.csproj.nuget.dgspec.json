@@ -51,6 +51,12 @@
               "target": "Package",
               "version": "[1.*, )"
             },
+            "BepInEx.AssemblyPublicizer.MSBuild": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[0.4.2, )"
+            },
             "BepInEx.Core": {
               "target": "Package",
               "version": "[5.*, )"
@@ -58,10 +64,6 @@
             "BepInEx.PluginInfoProps": {
               "target": "Package",
               "version": "[1.*, )"
-            },
-            "LethalCompanyGameLibs": {
-              "target": "Package",
-              "version": "[45.0.0, )"
             },
             "UnityEngine.Modules": {
               "include": "Compile",
@@ -85,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }

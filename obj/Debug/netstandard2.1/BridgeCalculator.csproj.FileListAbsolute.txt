@@ -10,3 +10,4 @@ D:\Projects\MODS\Lethal Company\BridgeCalculator\obj\Debug\netstandard2.1\Bridge
 D:\Projects\MODS\Lethal Company\BridgeCalculator\obj\Debug\netstandard2.1\BridgeCalculator.sourcelink.json
 D:\Projects\MODS\Lethal Company\BridgeCalculator\obj\Debug\netstandard2.1\BridgeCalculator.dll
 D:\Projects\MODS\Lethal Company\BridgeCalculator\obj\Debug\netstandard2.1\BridgeCalculator.pdb
+D:\Projects\MODS\Lethal Company\BridgeCalculator\obj\Debug\netstandard2.1\BridgeCalculator.IgnoresAccessChecksTo.cs

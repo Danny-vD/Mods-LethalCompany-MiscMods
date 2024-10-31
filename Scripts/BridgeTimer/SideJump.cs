@@ -9,9 +9,9 @@ namespace BridgeCalculator.BridgeTimer
 		private const float maximumSideJumpTimer = 5f;
 
 		public bool IsJumping { get; private set; }
-		
+
 		public float JumpTimerValue { get; private set; }
-		
+
 		public float HealthRegained { get; private set; }
 
 		private float jumpStartedDurability;
@@ -86,7 +86,7 @@ namespace BridgeCalculator.BridgeTimer
 		private bool WentOutsideOfBridge()
 		{
 			Vector3 playerPosition = jumpingTransform.position;
-			return playerPosition.z <= bridgeRunManager.TriggerBounds.Item1 || playerPosition.z >= bridgeRunManager.TriggerBounds.Item2;
+			return bridgeRunManager.IsOutsideOfBridge(playerPosition, out _, out _);
 		}
 
 		public void OnDestroy()

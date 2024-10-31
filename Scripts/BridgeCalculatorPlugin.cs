@@ -1,6 +1,5 @@
 ﻿using BepInEx;
 using BridgeCalculator.Utils;
-using Dissonance;
 
 namespace BridgeCalculator
 {
@@ -25,11 +24,6 @@ namespace BridgeCalculator
 			LoggerUtil.Log(BepInEx.Logging.LogLevel.Info, $"Plugin {DEPENDENCY_STRING} is loaded!"); // Using the Log function circumvents the configuration option, this is by design
 
 			PatchUtil.PatchFunctions();
-			
-			Logs.SetLogLevel(LogCategory.Core, Dissonance.LogLevel.Error);
-			Logs.SetLogLevel(LogCategory.Network, Dissonance.LogLevel.Error);
-			Logs.SetLogLevel(LogCategory.Playback, Dissonance.LogLevel.Error);
-			Logs.SetLogLevel(LogCategory.Recording, Dissonance.LogLevel.Error);
 		}
 	}
 }

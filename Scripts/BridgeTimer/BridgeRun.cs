@@ -86,8 +86,7 @@ namespace BridgeCalculator.BridgeTimer
 		{
 			bool runStopped = false;
 
-			bool leftPastA = bridgeExitPosition.z <= BridgeRunManager.TriggerBounds.Item1;
-			bool leftPastB = bridgeExitPosition.z >= BridgeRunManager.TriggerBounds.Item2;
+			BridgeRunManager.IsOutsideOfBridge(bridgeExitPosition, out bool leftPastA, out bool leftPastB);
 			
 			if (leftPastA || leftPastB)
 			{

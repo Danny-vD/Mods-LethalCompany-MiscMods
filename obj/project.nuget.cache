@@ -1,15 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "YSoaInrLYhFFQeh4xma0+8cCwTynksTDz0TNU8rQPsbTOIIdov+BuMyQNoecgoK19v0nWiufSEcqmwv0wOiT/w==",
+  "dgSpecHash": "C2d+Tn5TiVwHIrAcJw+pjNUkCTotHHTpLxEi4emHNClNIfSEvSQalksUrM6mV7RqY5LVMQ70/9Bfyu98sv1+QQ==",
   "success": true,
   "projectFilePath": "D:\\Projects\\MODS\\Lethal Company\\BridgeCalculator\\BridgeCalculator.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dvdui\\.nuget\\packages\\bepinex.analyzers\\1.0.8\\bepinex.analyzers.1.0.8.nupkg.sha512",
+    "C:\\Users\\dvdui\\.nuget\\packages\\bepinex.assemblypublicizer.msbuild\\0.4.2\\bepinex.assemblypublicizer.msbuild.0.4.2.nupkg.sha512",
     "C:\\Users\\dvdui\\.nuget\\packages\\bepinex.baselib\\5.4.20\\bepinex.baselib.5.4.20.nupkg.sha512",
     "C:\\Users\\dvdui\\.nuget\\packages\\bepinex.core\\5.4.21\\bepinex.core.5.4.21.nupkg.sha512",
     "C:\\Users\\dvdui\\.nuget\\packages\\bepinex.plugininfoprops\\1.1.0\\bepinex.plugininfoprops.1.1.0.nupkg.sha512",
     "C:\\Users\\dvdui\\.nuget\\packages\\harmonyx\\2.7.0\\harmonyx.2.7.0.nupkg.sha512",
-    "C:\\Users\\dvdui\\.nuget\\packages\\lethalcompanygamelibs\\45.0.0\\lethalcompanygamelibs.45.0.0.nupkg.sha512",
     "C:\\Users\\dvdui\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\dvdui\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\dvdui\\.nuget\\packages\\mono.cecil\\0.11.4\\mono.cecil.0.11.4.nupkg.sha512",
@@ -44,16 +44,5 @@
     "C:\\Users\\dvdui\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",
     "C:\\Users\\dvdui\\.nuget\\packages\\unityengine.modules\\2022.3.9\\unityengine.modules.2022.3.9.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'LethalCompanyGameLibs 45.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework '.NETStandard,Version=v2.1'. This package may not be fully compatible with your project.",
-      "libraryId": "LethalCompanyGameLibs",
-      "targetGraphs": [
-        ".NETStandard,Version=v2.1"
-      ]
-    }
-  ]
+  "logs": []
 }

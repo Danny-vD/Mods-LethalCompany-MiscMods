@@ -5,6 +5,7 @@ using BridgeCalculator.BridgeTimer;
 using BridgeCalculator.BridgeTimer.StaticClasses;
 using BridgeCalculator.Data;
 using BridgeCalculator.Events;
+using BridgeCalculator.Utils;
 using GameNetcodeStuff;
 using UnityEngine;
 
@@ -16,27 +17,45 @@ namespace BridgeCalculator.Components
 
 		public Tuple<float, float> TriggerBounds { get; private set; }
 
+		public bool BridgeAllignsWithGlobalZ { get; private set; }
+
 		private float belowBridgeThreshold;
 
 		private readonly Dictionary<Collider, BridgeRun> currentRuns = new Dictionary<Collider, BridgeRun>();
 
 		private readonly Dictionary<Collider, PlayerRunStatistics> statisticsMap = new Dictionary<Collider, PlayerRunStatistics>();
-		
+
 		private Collider triggerCollider;
 		private BridgeTrigger bridgeTrigger;
 
 		private void Awake()
 		{
+			BridgeAllignsWithGlobalZ = RoundManager.Instance.currentLevel.name.Contains("Vow");
+
 			bridgeTrigger = GetComponent<BridgeTrigger>();
 
 			triggerCollider = GetComponent<Collider>();
 			Bounds triggerBounds = triggerCollider.bounds;
-			BridgeLength    = triggerBounds.extents.z * 2;
-			
-			float triggerMinimumZValue = triggerBounds.center.z - triggerBounds.extents.z;
-			float triggerMaximumZValue = triggerBounds.center.z + triggerBounds.extents.z;
 
-			TriggerBounds = new Tuple<float, float>(triggerMinimumZValue, triggerMaximumZValue);
+			float triggerMinimumPositionValue = 0;
+			float triggerMaximumPositionValue = 0;
+
+			if (BridgeAllignsWithGlobalZ)
+			{
+				BridgeLength = triggerBounds.extents.z * 2;
+
+				triggerMinimumPositionValue = triggerBounds.center.z - triggerBounds.extents.z;
+				triggerMaximumPositionValue = triggerBounds.center.z + triggerBounds.extents.z;
+			}
+			else // Bridge alligns with global X
+			{
+				BridgeLength = triggerBounds.extents.x * 2;
+
+				triggerMinimumPositionValue = triggerBounds.center.x - triggerBounds.extents.x;
+				triggerMaximumPositionValue = triggerBounds.center.x + triggerBounds.extents.x;
+			}
+
+			TriggerBounds = new Tuple<float, float>(triggerMinimumPositionValue, triggerMaximumPositionValue);
 
 			belowBridgeThreshold = transform.position.y - 1;
 
@@ -62,7 +81,7 @@ namespace BridgeCalculator.Components
 					FellOffBridge(other);
 					return;
 				}
-				
+
 				enterPosition.y = 0;
 
 				if (currentRuns.TryGetValue(other, out BridgeRun run))
@@ -79,7 +98,7 @@ namespace BridgeCalculator.Components
 						statistics = new PlayerRunStatistics();
 						statisticsMap.Add(other, statistics);
 					}
-					
+
 					run = new BridgeRun(bridgeTrigger, playerControllerB.playerUsername, enterPosition, statistics, this);
 					BridgeRunLogger.EnteredBridge(playerControllerB.playerUsername);
 
@@ -125,7 +144,7 @@ namespace BridgeCalculator.Components
 			{
 				pair.Value.StopRun(true);
 			}
-			
+
 			currentRuns.Clear();
 		}
 
@@ -144,13 +163,29 @@ namespace BridgeCalculator.Components
 			}
 		}
 
+		public bool IsOutsideOfBridge(Vector3 position, out bool outsideSideA, out bool outsideSideB)
+		{
+			if (BridgeAllignsWithGlobalZ)
+			{
+				outsideSideA = position.z <= TriggerBounds.Item1;
+				outsideSideB = position.z >= TriggerBounds.Item2;
+			}
+			else // Bridge alligns with global X
+			{
+				outsideSideA = position.x <= TriggerBounds.Item1;
+				outsideSideB = position.x >= TriggerBounds.Item2;
+			}
+
+			return outsideSideA || outsideSideB;
+		}
+
 		public override void OnDestroy()
 		{
 			foreach (KeyValuePair<Collider, BridgeRun> pair in currentRuns)
 			{
 				pair.Value.OnDestroy();
 			}
-			
+
 			currentRuns.Clear();
 			BridgeFallenEvent.OnBridgeFallen -= BridgeCollapsed;
 			base.OnDestroy();

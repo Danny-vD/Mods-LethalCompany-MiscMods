@@ -10,9 +10,9 @@
       "BridgeCalculator/1.0.0": {
         "dependencies": {
           "BepInEx.Analyzers": "1.0.8",
+          "BepInEx.AssemblyPublicizer.MSBuild": "0.4.2",
           "BepInEx.Core": "5.4.21",
           "BepInEx.PluginInfoProps": "1.1.0",
-          "LethalCompanyGameLibs": "45.0.0",
           "UnityEngine.Modules": "2022.3.9"
         },
         "runtime": {
@@ -20,6 +20,34 @@
         }
       },
       "BepInEx.Analyzers/1.0.8": {},
+      "BepInEx.AssemblyPublicizer.MSBuild/0.4.2": {
+        "runtime": {
+          "lib/netstandard2.1/AsmResolver.DotNet.dll": {
+            "assemblyVersion": "5.5.1.0",
+            "fileVersion": "5.5.1.0"
+          },
+          "lib/netstandard2.1/AsmResolver.PE.File.dll": {
+            "assemblyVersion": "5.5.1.0",
+            "fileVersion": "5.5.1.0"
+          },
+          "lib/netstandard2.1/AsmResolver.PE.dll": {
+            "assemblyVersion": "5.5.1.0",
+            "fileVersion": "5.5.1.0"
+          },
+          "lib/netstandard2.1/AsmResolver.dll": {
+            "assemblyVersion": "5.5.1.0",
+            "fileVersion": "5.5.1.0"
+          },
+          "lib/netstandard2.1/BepInEx.AssemblyPublicizer.MSBuild.dll": {
+            "assemblyVersion": "0.4.2.0",
+            "fileVersion": "0.4.2.0"
+          },
+          "lib/netstandard2.1/BepInEx.AssemblyPublicizer.dll": {
+            "assemblyVersion": "0.4.2.0",
+            "fileVersion": "0.4.2.0"
+          }
+        }
+      },
       "BepInEx.BaseLib/5.4.20": {
         "runtime": {
           "lib/netstandard2.0/BepInEx.dll": {
@@ -44,558 +72,6 @@
           "lib/netstandard2.0/0Harmony.dll": {
             "assemblyVersion": "2.7.0.0",
             "fileVersion": "2.7.0.0"
-          }
-        }
-      },
-      "LethalCompanyGameLibs/45.0.0": {
-        "runtime": {
-          "lib/AmazingAssets.TerrainToMesh.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          },
-          "lib/Assembly-CSharp-firstpass.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Assembly-CSharp.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/ClientNetworkTransform.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/DissonanceVoip.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Facepunch Transport for Netcode for GameObjects.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Facepunch.Steamworks.Win64.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          },
-          "lib/Mono.Security.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.0.0"
-          },
-          "lib/Newtonsoft.Json.dll": {
-            "assemblyVersion": "13.0.0.0",
-            "fileVersion": "13.0.2.0"
-          },
-          "lib/Unity.AI.Navigation.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Animation.Rigging.DocCodeExamples.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Animation.Rigging.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Burst.Cecil.Mdb.dll": {
-            "assemblyVersion": "0.10.0.0",
-            "fileVersion": "0.10.0.0"
-          },
-          "lib/Unity.Burst.Cecil.Pdb.dll": {
-            "assemblyVersion": "0.10.0.0",
-            "fileVersion": "0.10.0.0"
-          },
-          "lib/Unity.Burst.Cecil.Rocks.dll": {
-            "assemblyVersion": "0.10.0.0",
-            "fileVersion": "0.10.0.0"
-          },
-          "lib/Unity.Burst.Cecil.dll": {
-            "assemblyVersion": "0.10.0.0",
-            "fileVersion": "0.10.0.0"
-          },
-          "lib/Unity.Burst.Unsafe.dll": {
-            "assemblyVersion": "4.0.5.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Burst.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Collections.LowLevel.ILSupport.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Collections.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.InputSystem.ForUI.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.InputSystem.dll": {
-            "assemblyVersion": "1.7.0.0",
-            "fileVersion": "1.7.0.0"
-          },
-          "lib/Unity.Jobs.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Mathematics.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          },
-          "lib/Unity.Multiplayer.Tools.Common.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Multiplayer.Tools.MetricTypes.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Multiplayer.Tools.NetStats.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Multiplayer.Tools.NetStatsMonitor.Component.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Multiplayer.Tools.NetStatsMonitor.Configuration.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Multiplayer.Tools.NetStatsMonitor.Implementation.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Multiplayer.Tools.NetStatsReporting.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Multiplayer.Tools.NetworkProfiler.Runtime.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Multiplayer.Tools.NetworkSolutionInterface.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Multiplayer.Tools.Util.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Netcode.Components.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Netcode.Runtime.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Networking.Transport.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.ProBuilder.Csg.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.ProBuilder.KdTree.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.ProBuilder.Poly2Tri.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.ProBuilder.Stl.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.ProBuilder.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Profiling.Core.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.RenderPipelines.Core.Runtime.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.RenderPipelines.Core.ShaderLibrary.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.RenderPipelines.HighDefinition.Config.Runtime.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.RenderPipelines.HighDefinition.Runtime.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Services.Authentication.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Services.Core.Analytics.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Services.Core.Configuration.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Services.Core.Device.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Services.Core.Environments.Internal.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Services.Core.Environments.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Services.Core.Internal.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Services.Core.Networking.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Services.Core.Registration.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Services.Core.Scheduler.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Services.Core.Telemetry.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Services.Core.Threading.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Services.Core.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Services.QoS.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Services.Relay.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.TextMeshPro.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/Unity.Timeline.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          },
-          "lib/Unity.VisualEffectGraph.Runtime.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.AIModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.ARModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.AccessibilityModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.AndroidJNIModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.AnimationModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.AssetBundleModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.AudioModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.ClothModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.ClusterInputModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.ClusterRendererModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.ContentLoadModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.CoreModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.CrashReportingModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.DSPGraphModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.DirectorModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.GIModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.GameCenterModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.GridModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.HotReloadModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.IMGUIModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.ImageConversionModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.InputLegacyModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.InputModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.JSONSerializeModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.LocalizationModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.NVIDIAModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.ParticleSystemModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.PerformanceReportingModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.Physics2DModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.PhysicsModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.ProfilerModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.PropertiesModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.ScreenCaptureModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.SharedInternalsModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.SpriteMaskModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.SpriteShapeModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.StreamingModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.SubstanceModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.SubsystemsModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.TLSModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.TerrainModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.TerrainPhysicsModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.TextCoreFontEngineModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.TextCoreTextEngineModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.TextRenderingModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.TilemapModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.UI.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          },
-          "lib/UnityEngine.UIElementsModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.UIElementsNativeModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.UIModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.UNETModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.UmbraModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.UnityAnalyticsCommonModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.UnityAnalyticsModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.UnityConnectModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.UnityCurlModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.UnityTestProtocolModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.UnityWebRequestAssetBundleModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.UnityWebRequestAudioModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.UnityWebRequestModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.UnityWebRequestTextureModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.UnityWebRequestWWWModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.VFXModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.VRModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.VehiclesModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.VideoModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.VirtualTexturingModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.WindModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.XRModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          },
-          "lib/UnityEngine.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
           }
         }
       },
@@ -920,6 +396,13 @@
       "path": "bepinex.analyzers/1.0.8",
       "hashPath": "bepinex.analyzers.1.0.8.nupkg.sha512"
     },
+    "BepInEx.AssemblyPublicizer.MSBuild/0.4.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-AwGR6zOQxhWPWmcMdmhCaawC2qYdYHttkGmlXxyvhB1EIUAtuILEle8kKSkzElnbFGZjvw6iabpFi+AYUG4IuA==",
+      "path": "bepinex.assemblypublicizer.msbuild/0.4.2",
+      "hashPath": "bepinex.assemblypublicizer.msbuild.0.4.2.nupkg.sha512"
+    },
     "BepInEx.BaseLib/5.4.20": {
       "type": "package",
       "serviceable": true,
@@ -947,13 +430,6 @@
       "sha512": "sha512-lec/SkduQspMa3Pi/nM/NSvA84Za8HCCWA8ybdToKiTqnBZa+JC5g6rxoFQCg/1vNuYcvjy77edePZzIEsRmvw==",
       "path": "harmonyx/2.7.0",
       "hashPath": "harmonyx.2.7.0.nupkg.sha512"
-    },
-    "LethalCompanyGameLibs/45.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-8kvDb72NdR1C6WqIEMCR5mcmXHLDtn6LCpP5YmOaGlDcUiGSCWjdlV6wtGZTV5OUPDr+3yo6wDuld43CNNEFYQ==",
-      "path": "lethalcompanygamelibs/45.0.0",
-      "hashPath": "lethalcompanygamelibs.45.0.0.nupkg.sha512"
     },
     "Microsoft.NETCore.Platforms/1.1.0": {
       "type": "package",
