@@ -19,13 +19,13 @@ namespace ExtraInformation.InfoLoggers
 			float scrapValueMultiplier = RoundManager.Instance.scrapValueMultiplier;
 
 			int minScrapInLevel = (int)(level.minScrap * scrapAmountMultiplier);
-			//int maxScrapInLevel = (int)((level.maxScrap - 1) * scrapAmountMultiplier); // - 1 because the upper bound is exclusive
-			int maxScrapInLevel = (int)(level.maxScrap * scrapAmountMultiplier); // TODO: uncomment
+			int maxScrapInLevel = (int)((level.maxScrap - 1) * scrapAmountMultiplier); // - 1 because the upper bound is exclusive
+			//int maxScrapInLevel = (int)(level.maxScrap * scrapAmountMultiplier); // TODO: uncomment
 
 			stringBuilder.AppendLine($"total weight: {totalWeight}\nScrap in level: {minScrapInLevel} - {maxScrapInLevel}");
 			stringBuilder.AppendLine($"scrapAmountMultiplier = {scrapAmountMultiplier} | scrapValueMultiplier = {scrapValueMultiplier} | factorySizeMultiplier = {level.factorySizeMultiplier}\n");
 
-			//spawnableScrap = spawnableScrap.OrderByDescending(pair => pair.rarity).ToList(); // TODO: Uncomment
+			spawnableScrap = spawnableScrap.OrderByDescending(pair => pair.rarity).ToList(); // TODO: Uncomment
 
 			int usualMinValue = 0;
 			int usualMaxValue = 0;
@@ -44,11 +44,11 @@ namespace ExtraInformation.InfoLoggers
 
 				Item item = itemWithRarity.spawnableItem;
 
-				int maxValue = (int)(item.maxValue);  // * scrapValueMultiplier); //TODO: UNCOMMENT
-				int minValue = (int)(item.minValue); // * scrapValueMultiplier);
+				int maxValue = (int)(item.maxValue * scrapValueMultiplier); //TODO: UNCOMMENT
+				int minValue = (int)(item.minValue * scrapValueMultiplier);
 
-				//stringBuilder.AppendLine($"{spawnChance:P} {item.itemName} {{{levelMinPercentage} - {levelMaxPercentage}}} [{itemWithRarity.rarity}] [${minValue} - ${maxValue}]"); // TODO: Uncomment
-				stringBuilder.AppendLine($"{{{itemWithRarity.rarity}}} {item.itemName} {item.weight} [${minValue} - ${maxValue}] [conductive: {item.isConductiveMetal}] [2-handed {item.twoHanded}]");
+				stringBuilder.AppendLine($"{spawnChance:P} {item.itemName} {{{levelMinPercentage} - {levelMaxPercentage}}} [{itemWithRarity.rarity}] [${minValue} - ${maxValue}]"); // TODO: Uncomment
+				//stringBuilder.AppendLine($"{{{itemWithRarity.rarity}}} {item.itemName} {item.weight} [${minValue} - ${maxValue}] [conductive: {item.isConductiveMetal}] [2-handed {item.twoHanded}]");
 
 				if (item.twoHanded)
 				{

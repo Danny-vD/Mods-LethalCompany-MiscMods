@@ -28,7 +28,7 @@ namespace ExtraInformation.Utils
 
 		private static void PatchManually(Harmony harmonyInstance)
 		{
-			PatchExplicitInterface<EnemyAICollisionDetect, IHittable>(harmonyInstance, nameof(IHittable.Hit), nameof(ManualPatches.EnemyAICollisionDetectHitPatch));
+			//PatchExplicitInterface<EnemyAICollisionDetect, IHittable>(harmonyInstance, nameof(IHittable.Hit), nameof(ManualPatches.EnemyAICollisionDetectHitPatch));
 			PatchExplicitInterface<PlayerControllerB, IHittable>(harmonyInstance, nameof(IHittable.Hit), nameof(ManualPatches.PlayerControllerBHitPatch));
 		}
 

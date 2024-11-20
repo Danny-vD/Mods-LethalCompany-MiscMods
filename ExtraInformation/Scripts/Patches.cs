@@ -34,7 +34,8 @@ namespace ExtraInformation
 
 			HUDInfoShower.ShowValueCarrying(stringBuilder, localPlayerController);
 			HUDInfoShower.ShowSpeed(stringBuilder, localPlayerController);
-			HUDInfoShower.ShowEggInformation(stringBuilder, localPlayerController);
+
+			//HUDInfoShower.ShowEggInformation(stringBuilder, localPlayerController);
 
 			// NOTE: TEMP
 			//HUDInfoShower.ShowImmortality(stringBuilder, localPlayerController);
@@ -66,36 +67,48 @@ namespace ExtraInformation
 		internal static void StartOfRoundChangeLevelPatch(StartOfRound __instance)
 		{
 			SelectableLevel currentLevel = __instance.currentLevel;
-			
+
 			//TODO: Add support for challenge file. See RoundManager.SetChallengeFileRandomModifiers()
 
 			LoggerUtil.LogError("");
 			LevelInfoLogger.LogDungeonFlowsOfLevel(currentLevel);
 			LevelInfoLogger.LogWeatherOfLevel(currentLevel);
-			
-			MapObjectInfoLogger.LogMapObjects(currentLevel);
+
+			//MapObjectInfoLogger.LogMapObjectsCurveData(currentLevel);
 
 			EnemyInfoLogger.LogEnemyInfoOfLevel(currentLevel); //TODO: UNCOMMENT
 			ScrapInfoLogger.LogScrapInfoOfLevel(currentLevel);
 			LoggerUtil.LogError("");
 		}
-		
+
 // LEVEL FINISHED LOADING
 
 		[HarmonyPatch(typeof(RoundManager), nameof(RoundManager.PredictAllOutsideEnemies)), HarmonyPostfix, HarmonyPriority(Priority.Last)]
 		internal static void PredictAllOutsideEnemiesPatch()
 		{
-			LoggerUtil.LogInfo($"\nCurrent map seed: {StartOfRound.Instance.randomMapSeed}");
+			StartOfRound startOfRound = StartOfRound.Instance;
+			LoggerUtil.LogInfo($"\nCurrent map seed: {startOfRound.randomMapSeed}");
 
 			int turretsInLevel = Object.FindObjectsByType<Turret>(FindObjectsSortMode.None).Length;
 			int minesInLevel = Object.FindObjectsByType<Landmine>(FindObjectsSortMode.None).Length;
 			int spikeTrapsInLevel = Object.FindObjectsByType<SpikeRoofTrap>(FindObjectsSortMode.None).Length;
-			
-			LoggerUtil.LogWarning($"\nMapObjects:\nTurrets: {turretsInLevel}\nMines: {minesInLevel}\nSpike Traps: {spikeTrapsInLevel}");
+
+			MapObjectInfoLogger.GetMaximumMapObjects(startOfRound.currentLevel, out int maxTurrets, out int maxMines, out int maxSpikeTraps);
+
+			LoggerUtil.LogWarning($"\nMapObjects:\nTurrets: {turretsInLevel}/{maxTurrets}\nMines: {minesInLevel}/{maxMines}\nSpike Traps: {spikeTrapsInLevel}/{maxSpikeTraps}");
+		}
+
+// QUOTA VARIABLES
+
+		[HarmonyPatch(typeof(TimeOfDay), nameof(TimeOfDay.CalculateLuckValue)), HarmonyPostfix, HarmonyPriority(Priority.Last)]
+		internal static void CalculateLuckValuePatch(TimeOfDay __instance)
+		{
+			LoggerUtil.LogInfo($"Luck value: {__instance.luckValue}");
 		}
 
 // TEMPORARY PATCHES
 
+/*
 		[HarmonyPatch(typeof(RoundManager), nameof(RoundManager.GetRandomWeightedIndex)), HarmonyPrefix]
 		internal static bool RoundManagerGetRandomWeightedIndexPatch(RoundManager __instance, ref int __result, int[] weights, Random randomSeed = null)
 		{
@@ -172,6 +185,7 @@ namespace ExtraInformation
 			__result = randomSeed.Next(0, weights.Length);
 			return false;
 		}
+		/**/
 
 		/*
 		[HarmonyPatch(typeof(Shovel), nameof(Shovel.HitShovel)), HarmonyPostfix]
