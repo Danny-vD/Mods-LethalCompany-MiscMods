@@ -100,9 +100,16 @@ namespace ExtraInformation
 
 // QUOTA VARIABLES
 
-		[HarmonyPatch(typeof(TimeOfDay), nameof(TimeOfDay.CalculateLuckValue)), HarmonyPostfix, HarmonyPriority(Priority.Last)]
-		internal static void CalculateLuckValuePatch(TimeOfDay __instance)
+		[HarmonyPatch(typeof(TimeOfDay), nameof(TimeOfDay.SetNewProfitQuota)), HarmonyPostfix, HarmonyPriority(Priority.Last)]
+		internal static void SetNewProfitQuotaPatch(TimeOfDay __instance)
 		{
+			LoggerUtil.LogInfo($"Luck value: {__instance.luckValue}");
+		}
+
+		[HarmonyPatch(typeof(TimeOfDay), nameof(TimeOfDay.SyncNewProfitQuotaClientRpc)), HarmonyPostfix, HarmonyPriority(Priority.Last)]
+		internal static void SyncNewProfitQuotaClientRpcPatch(TimeOfDay __instance)
+		{
+			__instance.CalculateLuckValue();
 			LoggerUtil.LogInfo($"Luck value: {__instance.luckValue}");
 		}
 
