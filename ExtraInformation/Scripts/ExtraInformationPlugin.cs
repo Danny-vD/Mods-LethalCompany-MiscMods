@@ -10,7 +10,7 @@ namespace ExtraInformation
 	{
 		public const string GUID = $"DannyVD.mods.LethalCompany.{PLUGIN_NAME}";
 		public const string PLUGIN_NAME = "ExtraInformation";
-		public const string PLUGIN_VERSION = "2.0.0";
+		public const string PLUGIN_VERSION = "2.1.0";
 		
 		public const string DEPENDENCY_STRING = $"DannyVD-{PLUGIN_NAME}-{PLUGIN_VERSION}";
 

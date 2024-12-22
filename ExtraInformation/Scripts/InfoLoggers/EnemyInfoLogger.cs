@@ -20,7 +20,7 @@ namespace ExtraInformation.InfoLoggers
 			{
 				float spawnChance = daytimeEnemy.rarity / (float)dayTimeEnemiesTotalWeight;
 
-				stringBuilder.AppendLine($"{spawnChance:P} {daytimeEnemy.enemyType.enemyName} [{daytimeEnemy.rarity}] ({daytimeEnemy.enemyType.PowerLevel}) <{daytimeEnemy.enemyType.MaxCount}>");
+				stringBuilder.AppendLine($"{spawnChance:P} [{daytimeEnemy.rarity}] {daytimeEnemy.enemyType.enemyName} ({daytimeEnemy.enemyType.PowerLevel}) <{daytimeEnemy.enemyType.MaxCount}>");
 			}
 
 			stringBuilder.AppendLine($"\nInside enemies [{totalWeight}] (max power {level.maxEnemyPowerCount}):");
@@ -36,7 +36,7 @@ namespace ExtraInformation.InfoLoggers
 
 				spawnChance /= totalWeight;
 
-				stringBuilder.AppendLine($"{spawnChance:P} {insideEnemyType.enemyName} [{insideEnemy.rarity}] ({insideEnemyType.PowerLevel}) <{insideEnemyType.MaxCount}>");
+				stringBuilder.AppendLine($"{spawnChance:P} [{insideEnemy.rarity}] {insideEnemyType.enemyName} ({insideEnemyType.PowerLevel}) <{insideEnemyType.MaxCount}>");
 			}
 
 			stringBuilder.AppendLine($"\nOutside enemies [{totalOutsideEnemyWeight}] (max power {level.maxOutsideEnemyPowerCount}):");
@@ -45,7 +45,7 @@ namespace ExtraInformation.InfoLoggers
 			{
 				float spawnChance = outsideEnemy.rarity / (float)totalOutsideEnemyWeight;
 
-				stringBuilder.AppendLine($"{spawnChance:P} {outsideEnemy.enemyType.enemyName} [{outsideEnemy.rarity}] ({outsideEnemy.enemyType.PowerLevel}) <{outsideEnemy.enemyType.MaxCount}>");
+				stringBuilder.AppendLine($"{spawnChance:P} [{outsideEnemy.rarity}] {outsideEnemy.enemyType.enemyName} ({outsideEnemy.enemyType.PowerLevel}) <{outsideEnemy.enemyType.MaxCount}>");
 			}
 
 			LoggerUtil.LogInfo(stringBuilder.ToString());

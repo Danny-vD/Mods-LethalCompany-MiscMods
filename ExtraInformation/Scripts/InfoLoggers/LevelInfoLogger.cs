@@ -11,15 +11,15 @@ namespace ExtraInformation.InfoLoggers
 		public static void LogWeatherOfLevel(SelectableLevel level)
 		{
 			StringBuilder stringBuilder = new StringBuilder($"{level.PlanetName} weathers:\n");
-			
+
 			foreach (LevelWeatherType levelWeatherType in level.randomWeathers.Select(randomWeather => randomWeather.weatherType))
 			{
 				stringBuilder.AppendLine(levelWeatherType.ToString());
 			}
-			
+
 			LoggerUtil.LogInfo(stringBuilder.ToString());
 		}
-		
+
 		public static void LogDungeonFlowsOfLevel(SelectableLevel level)
 		{
 			IntWithRarity[] dungeonFlowTypes = level.dungeonFlowTypes;
@@ -34,8 +34,13 @@ namespace ExtraInformation.InfoLoggers
 			else
 			{
 				int totalWeight = dungeonFlowTypes.Sum(dungeonFlowType => dungeonFlowType.rarity);
-				//IOrderedEnumerable<IntWithRarity> orderedFlowTypes = dungeonFlowTypes.OrderByDescending(dungeonFlowType => dungeonFlowType.rarity); // TODO: Uncomment
+				
+#if DEVELOPER_MODE
+
 				IntWithRarity[] orderedFlowTypes = dungeonFlowTypes;
+#else
+				IOrderedEnumerable<IntWithRarity> orderedFlowTypes = dungeonFlowTypes.OrderByDescending(dungeonFlowType => dungeonFlowType.rarity);
+#endif
 
 				IndoorMapType[] dungeonFlows = RoundManager.Instance.dungeonFlowTypes;
 				float mapSizeMultiplier = RoundManager.Instance.mapSizeMultiplier;
@@ -49,7 +54,7 @@ namespace ExtraInformation.InfoLoggers
 
 					float size = Mathf.Round(level.factorySizeMultiplier / indoorMapType.MapTileSize * mapSizeMultiplier * 100f) / 100f;
 
-					stringBuilder.AppendLine($"{chance:P} {GetFlowName(dungeonFlow.name)} [{orderedFlowType.rarity}] (Size {size}) [TileSize {indoorMapType.MapTileSize}]");
+					stringBuilder.AppendLine($"{chance:P} [{orderedFlowType.rarity}] {GetFlowName(dungeonFlow.name)} (Size {size}) [TileSize {indoorMapType.MapTileSize}]");
 				}
 			}
 

@@ -8,7 +8,6 @@ using GameNetcodeStuff;
 using HarmonyLib;
 using Unity.Netcode;
 using UnityEngine;
-using Random = System.Random;
 
 namespace ExtraInformation
 {
@@ -96,6 +95,13 @@ namespace ExtraInformation
 			MapObjectInfoLogger.GetMaximumMapObjects(startOfRound.currentLevel, out int maxTurrets, out int maxMines, out int maxSpikeTraps);
 
 			LoggerUtil.LogWarning($"\nMapObjects:\nTurrets: {turretsInLevel}/{maxTurrets}\nMines: {minesInLevel}/{maxMines}\nSpike Traps: {spikeTrapsInLevel}/{maxSpikeTraps}");
+
+#if !DEVELOPER_MODE
+			foreach (KeyItem keyItem in Object.FindObjectsOfType<KeyItem>())
+			{
+				keyItem.SetScrapValue(0);
+			}
+#endif
 		}
 
 // QUOTA VARIABLES
@@ -111,6 +117,17 @@ namespace ExtraInformation
 		{
 			__instance.CalculateLuckValue();
 			LoggerUtil.LogInfo($"Luck value: {__instance.luckValue}");
+		}
+
+		[HarmonyPatch(typeof(RoundManager), nameof(RoundManager.SyncScrapValuesClientRpc)), HarmonyPostfix, HarmonyPriority(Priority.Last)]
+		internal static void SyncScrapValuesClientRpcPatch(TimeOfDay __instance)
+		{
+#if !DEVELOPER_MODE
+			foreach (KeyItem keyItem in Object.FindObjectsOfType<KeyItem>())
+			{
+				keyItem.SetScrapValue(0);
+			}
+#endif
 		}
 
 // TEMPORARY PATCHES

@@ -19,14 +19,20 @@ namespace ExtraInformation.InfoLoggers
 			float scrapValueMultiplier = RoundManager.Instance.scrapValueMultiplier;
 
 			int minScrapInLevel = (int)(level.minScrap * scrapAmountMultiplier);
-			int maxScrapInLevel = (int)((level.maxScrap - 1) * scrapAmountMultiplier); // - 1 because the upper bound is exclusive
 
-			//int maxScrapInLevel = (int)(level.maxScrap * scrapAmountMultiplier); // NOTE: Uncomment when adding data to code
+#if DEVELOPER_MODE
+			int maxScrapInLevel = (int)(level.maxScrap * scrapAmountMultiplier);
+#else
+			int maxScrapInLevel = (int)((level.maxScrap - 1) * scrapAmountMultiplier); // - 1 because the upper bound is exclusive
+#endif
+
 
 			stringBuilder.AppendLine($"total weight: {totalWeight}\nScrap in level: {minScrapInLevel} - {maxScrapInLevel}");
 			stringBuilder.AppendLine($"scrapAmountMultiplier = {scrapAmountMultiplier} | scrapValueMultiplier = {scrapValueMultiplier} | factorySizeMultiplier = {level.factorySizeMultiplier}\n");
 
-			spawnableScrap = spawnableScrap.OrderByDescending(pair => pair.rarity).ToList(); // NOTE: Comment when adding data to code
+#if DEVELOPER_MODE
+			spawnableScrap = spawnableScrap.OrderByDescending(pair => pair.rarity).ToList();
+#endif
 
 			int averageMinValuePerItem = 0;
 			int averageValuePerItem = 0;
@@ -46,16 +52,23 @@ namespace ExtraInformation.InfoLoggers
 
 				Item item = itemWithRarity.spawnableItem;
 
-				int maxValue = (int)(item.maxValue * scrapValueMultiplier); //NOTE: Comment when adding data to code
-				int minValue = (int)(item.minValue * scrapValueMultiplier);
+				int maxValue = item.maxValue;
+				int minValue = item.minValue;
+
+#if !DEVELOPER_MODE
+				maxValue = (int)(item.maxValue * scrapValueMultiplier);
+				minValue = (int)(item.minValue * scrapValueMultiplier);
+#endif
 
 				averageMaxValuePerItem += maxValue * itemWithRarity.rarity;
 				averageValuePerItem    += (int)(Mathf.Lerp(minValue, maxValue, 0.5f) * itemWithRarity.rarity);
 				averageMinValuePerItem += minValue * itemWithRarity.rarity;
 
-				stringBuilder.AppendLine($"{spawnChance:P} {item.itemName} {{{levelMinPercentage} - {levelMaxPercentage}}} [{itemWithRarity.rarity}] [${minValue} - ${maxValue}]"); // NOTE: For general purposes
-
-				//stringBuilder.AppendLine($"{{{itemWithRarity.rarity}}} {item.itemName} {item.weight} [${minValue} - ${maxValue}] [conductive: {item.isConductiveMetal}] [2-handed {item.twoHanded}]"); // NOTE: for research purposes
+#if DEVELOPER_MODE
+				stringBuilder.AppendLine($"{{{itemWithRarity.rarity}}} {item.itemName} {item.weight} [${minValue} - ${maxValue}] [conductive: {item.isConductiveMetal}] [2-handed {item.twoHanded}]");
+#else
+				stringBuilder.AppendLine($"{spawnChance:P} [{itemWithRarity.rarity}] {item.itemName} {{{levelMinPercentage} - {levelMaxPercentage}}} [${minValue} - ${maxValue}]");
+#endif
 
 				if (item.twoHanded)
 				{
@@ -87,8 +100,8 @@ namespace ExtraInformation.InfoLoggers
 			}
 
 			int averageMinValueInLevel = averageValuePerItem * minScrapInLevel;
-			int averageMaxValueInLevel = averageValuePerItem * minScrapInLevel;
-			
+			int averageMaxValueInLevel = averageValuePerItem * maxScrapInLevel;
+
 			worstMinValue *= minScrapInLevel;
 			bestMaxValue  *= maxScrapInLevel;
 
@@ -97,12 +110,12 @@ namespace ExtraInformation.InfoLoggers
 			stringBuilder.AppendLine();
 
 			float twoHandedChance = twoHandedScrapWeight / (float)totalWeight;
-			int minTwoHandedItems = Mathf.RoundToInt(twoHandedChance * minScrapInLevel);
-			int maxTwoHandedItems = Mathf.RoundToInt(twoHandedChance * maxScrapInLevel);
+			int minTwoHandedItems = Mathf.FloorToInt(twoHandedChance * minScrapInLevel);
+			int maxTwoHandedItems = Mathf.FloorToInt(twoHandedChance * maxScrapInLevel);
 
 			stringBuilder.AppendLine($"Chance for 2-handed scrap: {twoHandedChance:P} [{minTwoHandedItems} - {maxTwoHandedItems}]");
 			stringBuilder.AppendLine($"Value in level: ${averageMinValueInLevel} - ${averageMaxValueInLevel} (${worstMinValue} - ${bestMaxValue})");
-			stringBuilder.AppendLine($"\nAverage value gap in items: ${averageValueGap}\t| Average value per item: ${averageValuePerItem} [${averageMinValueInLevel} - ${averageMaxValuePerItem}]");
+			stringBuilder.AppendLine($"\nAverage value gap in items: ${averageValueGap}\t| Average value per item: ${averageValuePerItem} [${averageMinValuePerItem} - ${averageMaxValuePerItem}]");
 
 			LoggerUtil.LogInfo(stringBuilder.ToString());
 		}
