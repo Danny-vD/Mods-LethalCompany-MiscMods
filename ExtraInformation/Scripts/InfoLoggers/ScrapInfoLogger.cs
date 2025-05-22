@@ -8,7 +8,7 @@ namespace ExtraInformation.InfoLoggers
 {
 	public static class ScrapInfoLogger
 	{
-		public static void LogScrapInfoOfLevel(SelectableLevel level)
+		public static void LogScrapInfoOfLevel(SelectableLevel level, float levelSize)
 		{
 			StringBuilder stringBuilder = new StringBuilder($"Scrap chances on {level.PlanetName}:\n");
 
@@ -18,19 +18,20 @@ namespace ExtraInformation.InfoLoggers
 			float scrapAmountMultiplier = RoundManager.Instance.scrapAmountMultiplier;
 			float scrapValueMultiplier = RoundManager.Instance.scrapValueMultiplier;
 
-			int minScrapInLevel = (int)(level.minScrap * scrapAmountMultiplier);
-
 #if DEVELOPER_MODE
-			int maxScrapInLevel = (int)(level.maxScrap * scrapAmountMultiplier);
+			int maxScrapInLevel = level.maxScrap;
+			int minScrapInLevel = level.minScrap;
 #else
 			int maxScrapInLevel = (int)((level.maxScrap - 1) * scrapAmountMultiplier); // - 1 because the upper bound is exclusive
+			int minScrapInLevel = (int)(level.minScrap * scrapAmountMultiplier);
 #endif
 
+			float averageScrapInLevel = (minScrapInLevel + maxScrapInLevel) / 2f;
 
-			stringBuilder.AppendLine($"total weight: {totalWeight}\nScrap in level: {minScrapInLevel} - {maxScrapInLevel}");
+			stringBuilder.AppendLine($"total weight: {totalWeight}\nScrap in level: {minScrapInLevel} - {maxScrapInLevel} ({averageScrapInLevel})");
 			stringBuilder.AppendLine($"scrapAmountMultiplier = {scrapAmountMultiplier} | scrapValueMultiplier = {scrapValueMultiplier} | factorySizeMultiplier = {level.factorySizeMultiplier}\n");
 
-#if DEVELOPER_MODE
+#if !DEVELOPER_MODE
 			spawnableScrap = spawnableScrap.OrderByDescending(pair => pair.rarity).ToList();
 #endif
 
@@ -52,12 +53,13 @@ namespace ExtraInformation.InfoLoggers
 
 				Item item = itemWithRarity.spawnableItem;
 
+
+#if DEVELOPER_MODE
 				int maxValue = item.maxValue;
 				int minValue = item.minValue;
-
-#if !DEVELOPER_MODE
-				maxValue = (int)(item.maxValue * scrapValueMultiplier);
-				minValue = (int)(item.minValue * scrapValueMultiplier);
+#else
+				int maxValue = (int)(item.maxValue * scrapValueMultiplier);
+				int minValue = (int)(item.minValue * scrapValueMultiplier);
 #endif
 
 				averageMaxValuePerItem += maxValue * itemWithRarity.rarity;
@@ -113,9 +115,14 @@ namespace ExtraInformation.InfoLoggers
 			int minTwoHandedItems = Mathf.FloorToInt(twoHandedChance * minScrapInLevel);
 			int maxTwoHandedItems = Mathf.FloorToInt(twoHandedChance * maxScrapInLevel);
 
+			float averageValueInLevel = averageScrapInLevel * averageValuePerItem;
+			float normalizedValueInLevel = averageValueInLevel / levelSize;
+
 			stringBuilder.AppendLine($"Chance for 2-handed scrap: {twoHandedChance:P} [{minTwoHandedItems} - {maxTwoHandedItems}]");
-			stringBuilder.AppendLine($"Value in level: ${averageMinValueInLevel} - ${averageMaxValueInLevel} (${worstMinValue} - ${bestMaxValue})");
+			stringBuilder.AppendLine($"Value in level: ${averageValueInLevel} [${averageMinValueInLevel} - ${averageMaxValueInLevel}] (${worstMinValue} - ${bestMaxValue})");
+
 			stringBuilder.AppendLine($"\nAverage value gap in items: ${averageValueGap}\t| Average value per item: ${averageValuePerItem} [${averageMinValuePerItem} - ${averageMaxValuePerItem}]");
+			stringBuilder.AppendLine($"Normalized value: ${normalizedValueInLevel}");
 
 			LoggerUtil.LogInfo(stringBuilder.ToString());
 		}

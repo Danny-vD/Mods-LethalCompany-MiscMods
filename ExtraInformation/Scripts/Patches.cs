@@ -1,6 +1,8 @@
 ﻿// ReSharper disable UnusedMember.Global // False positive, HarmonyX uses these to patch
 // ReSharper disable InconsistentNaming // While true, Harmony wants these specific names
 
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using ExtraInformation.InfoLoggers;
 using ExtraInformation.Utils;
@@ -70,13 +72,15 @@ namespace ExtraInformation
 			//TODO: Add support for challenge file. See RoundManager.SetChallengeFileRandomModifiers()
 
 			LoggerUtil.LogError("");
-			LevelInfoLogger.LogDungeonFlowsOfLevel(currentLevel);
+			LevelInfoLogger.LogDungeonFlowsOfLevel(currentLevel, out float levelSize);
 			LevelInfoLogger.LogWeatherOfLevel(currentLevel);
 
-			//MapObjectInfoLogger.LogMapObjectsCurveData(currentLevel);
+#if DEVELOPER_MODE
+			MapObjectInfoLogger.LogMapObjectsCurveData(currentLevel);
+#endif
 
-			EnemyInfoLogger.LogEnemyInfoOfLevel(currentLevel); //TODO: UNCOMMENT
-			ScrapInfoLogger.LogScrapInfoOfLevel(currentLevel);
+			EnemyInfoLogger.LogEnemyInfoOfLevel(currentLevel);
+			ScrapInfoLogger.LogScrapInfoOfLevel(currentLevel, levelSize);
 			LoggerUtil.LogError("");
 		}
 
@@ -109,15 +113,16 @@ namespace ExtraInformation
 		[HarmonyPatch(typeof(TimeOfDay), nameof(TimeOfDay.SetNewProfitQuota)), HarmonyPostfix, HarmonyPriority(Priority.Last)]
 		internal static void SetNewProfitQuotaPatch(TimeOfDay __instance)
 		{
-			LoggerUtil.LogInfo($"Luck value: {__instance.luckValue}");
+			LoggerUtil.LogWarning($"Luck value: {__instance.luckValue}");
 		}
 
-		[HarmonyPatch(typeof(TimeOfDay), nameof(TimeOfDay.SyncNewProfitQuotaClientRpc)), HarmonyPostfix, HarmonyPriority(Priority.Last)]
-		internal static void SyncNewProfitQuotaClientRpcPatch(TimeOfDay __instance)
-		{
-			__instance.CalculateLuckValue();
-			LoggerUtil.LogInfo($"Luck value: {__instance.luckValue}");
-		}
+		// [HarmonyPatch(typeof(TimeOfDay), nameof(TimeOfDay.SyncNewProfitQuotaClientRpc)), HarmonyPostfix, HarmonyPriority(Priority.Last)]
+		// internal static void SyncNewProfitQuotaClientRpcPatch()
+		// {
+		// 	List<UnlockableItem> unlockableItems = StartOfRound.Instance.unlockablesList.unlockables;
+		// 	float luck = Object.FindObjectsByType<AutoParentToShip>(FindObjectsSortMode.None).Sum(furniture => unlockableItems[furniture.unlockableID].luckValue);
+		// 	LoggerUtil.LogWarning($"Luck value: {luck}\t(client)");
+		// }
 
 		[HarmonyPatch(typeof(RoundManager), nameof(RoundManager.SyncScrapValuesClientRpc)), HarmonyPostfix, HarmonyPriority(Priority.Last)]
 		internal static void SyncScrapValuesClientRpcPatch(TimeOfDay __instance)

@@ -20,23 +20,26 @@ namespace ExtraInformation.InfoLoggers
 			LoggerUtil.LogInfo(stringBuilder.ToString());
 		}
 
-		public static void LogDungeonFlowsOfLevel(SelectableLevel level)
+		public static void LogDungeonFlowsOfLevel(SelectableLevel level, out float levelSize)
 		{
 			IntWithRarity[] dungeonFlowTypes = level.dungeonFlowTypes;
-			StringBuilder stringBuilder = new StringBuilder($"{level.PlanetName} ({level.levelID}) Info\n");
+			StringBuilder stringBuilder;
 
 			if (dungeonFlowTypes.Length == 0)
 			{
+				stringBuilder = new StringBuilder($"{level.PlanetName} ({level.levelID}) Info\n");
 				DungeonFlow dungeonFlow = RoundManager.Instance.dungeonFlowTypes.First().dungeonFlow;
 
 				stringBuilder.AppendLine($"100% {GetFlowName(dungeonFlow.name)}");
+				levelSize = 0;
 			}
 			else
 			{
 				int totalWeight = dungeonFlowTypes.Sum(dungeonFlowType => dungeonFlowType.rarity);
+				stringBuilder = new StringBuilder($"{level.PlanetName} ({level.levelID}) Info\nTotal Weight: {totalWeight}\n");
 				
-#if DEVELOPER_MODE
 
+#if DEVELOPER_MODE
 				IntWithRarity[] orderedFlowTypes = dungeonFlowTypes;
 #else
 				IOrderedEnumerable<IntWithRarity> orderedFlowTypes = dungeonFlowTypes.OrderByDescending(dungeonFlowType => dungeonFlowType.rarity);
@@ -44,6 +47,7 @@ namespace ExtraInformation.InfoLoggers
 
 				IndoorMapType[] dungeonFlows = RoundManager.Instance.dungeonFlowTypes;
 				float mapSizeMultiplier = RoundManager.Instance.mapSizeMultiplier;
+				levelSize = 0; // always overridden
 
 				foreach (IntWithRarity orderedFlowType in orderedFlowTypes)
 				{
@@ -52,9 +56,19 @@ namespace ExtraInformation.InfoLoggers
 					IndoorMapType indoorMapType = dungeonFlows[orderedFlowType.id];
 					DungeonFlow dungeonFlow = indoorMapType.dungeonFlow;
 
-					float size = Mathf.Round(level.factorySizeMultiplier / indoorMapType.MapTileSize * mapSizeMultiplier * 100f) / 100f;
+					float size;
 
-					stringBuilder.AppendLine($"{chance:P} [{orderedFlowType.rarity}] {GetFlowName(dungeonFlow.name)} (Size {size}) [TileSize {indoorMapType.MapTileSize}]");
+					if (GetFlowName(dungeonFlow.name).Contains("Factory"))
+					{
+						size = level.factorySizeMultiplier * mapSizeMultiplier;
+					}
+					else
+					{
+						size = Mathf.Round(level.factorySizeMultiplier / indoorMapType.MapTileSize * mapSizeMultiplier * 100f) / 100f;
+					}
+
+					levelSize = size * indoorMapType.MapTileSize;
+					stringBuilder.AppendLine($"{chance:P} [{orderedFlowType.rarity}] {GetFlowName(dungeonFlow.name)} (Size {size}) [TileSize {indoorMapType.MapTileSize}] <{levelSize}>");
 				}
 			}
 

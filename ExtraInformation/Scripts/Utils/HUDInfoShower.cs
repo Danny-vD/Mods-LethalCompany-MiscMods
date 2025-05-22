@@ -32,6 +32,7 @@ namespace ExtraInformation.Utils
 			}
 
 			stringBuilder.AppendLine($"{speed:0.###} m/s");
+			stringBuilder.Append($"{player.sprintMultiplier:0.#####} m/s");
 		}
 
 		public static void ShowImmortality(StringBuilder stringBuilder, PlayerControllerB player)
